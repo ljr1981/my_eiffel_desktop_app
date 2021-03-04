@@ -17,7 +17,7 @@ feature {NONE} -- Initialization
 	make
 			-- Initialize Current
 		do
-			make_with_title ("Box Demo")
+			make_with_title ("Empty Window Demo")
 			set_size (800, 600)
 			close_request_actions.extend (agent destroy_and_exit_if_last)
 		end
