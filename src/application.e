@@ -3,6 +3,8 @@ note
 		Demonstrate how to coordinate the EV_APPLICATION with EV_TITLED_WINDOW 
 		to form a working desktop application.
 		]"
+	EIS: "name=posted_CA022_issue_to_Eiffel_google_groups",
+			"src=https://groups.google.com/g/eiffel-users/c/whDZWeeHKMg"
 	ca_ignore: "CA022" 	-- Class 'APPLICATION' contains unreachable code
 						--	that should be considered to be removed.
 						--	REALITY: The structure of the code is okay.
