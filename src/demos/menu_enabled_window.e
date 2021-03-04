@@ -86,10 +86,8 @@ feature -- Event Operations
 
 	on_file_new_click
 			-- What happens when the File -> New menu item is clicked?
-		local
-			l_empty: EMPTY_DEMO_WINDOW
 		do
-			create l_empty.make_with_parent (Current)
+			(create {EMPTY_DEMO_WINDOW}.make_with_parent (Current)).do_nothing
 		end
 
 	on_file_exit_click
@@ -100,18 +98,14 @@ feature -- Event Operations
 
 	on_demo_gui_containership_click
 			-- What happens when the Demos -> Containership demo is clicked?
-		local
-			l_demo: CONTAINERSHIP_BOXING_DEMO_WINDOW
 		do
-			create l_demo.make_with_parent (Current)
+			(create {CONTAINERSHIP_BOXING_DEMO_WINDOW}.make_with_parent (Current)).do_nothing
 		end
 
 	on_demo_primitives_click
 			--
-		local
-			l_demo: EV_PRIMITIVE_DEMO_WINDOW
 		do
-			create l_demo.make_with_parent (Current)
+			(create {EV_PRIMITIVE_DEMO_WINDOW}.make_with_parent (Current)).do_nothing
 		end
 
 note

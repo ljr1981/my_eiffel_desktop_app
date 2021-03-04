@@ -98,18 +98,14 @@ feature {NONE} -- Implementation: GUI Events
 
 	on_empty_demo_button_click
 			-- What happens when `empty_demo_button' is clicked.
-		local
-			l_demo: EMPTY_DEMO_WINDOW
 		do
-			create l_demo.make_with_parent (Current)
+			(create {EMPTY_DEMO_WINDOW}.make_with_parent (Current)).do_nothing
 		end
 
 	on_menu_demo_button_click
 			-- What happens when `menu_demo_button' is clicked.
-		local
-			l_demo: MENU_ENABLED_WINDOW
 		do
-			create l_demo.make_with_parent (Current)
+			(create {MENU_ENABLED_WINDOW}.make_with_parent (Current)).do_nothing
 		end
 
 note
