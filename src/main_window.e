@@ -41,6 +41,7 @@ feature {NONE} -- Initialization
 			create button_box
 			-- Buttons
 			create empty_demo_button.make_with_text ("Box Demo Window")
+			create menu_demo_button.make_with_text ("Menu Demo Window")
 		end
 
 	initialize
@@ -55,15 +56,18 @@ feature {NONE} -- Initialization
 			extend (main_box)
 			main_box.extend (button_box)
 			button_box.extend (empty_demo_button)
+			button_box.extend (menu_demo_button)
 
 			-- Formatting
 			main_box.disable_item_expand (button_box)
 			button_box.disable_item_expand (empty_demo_button)
+			button_box.disable_item_expand (menu_demo_button)
 			button_box.set_padding (3)
 			button_box.set_border_width (3)
 
 			-- Actions
 			empty_demo_button.select_actions.extend (agent on_empty_demo_button_click)
+			menu_demo_button.select_actions.extend (agent on_menu_demo_button_click)
 
 			-- Your code generally precedes.
 			Precursor
@@ -85,6 +89,9 @@ feature {NONE} -- Implementation: GUI Objects
 			-- There are many ways to launch windows and perform
 			-- other tasking (this is what agents perfect for).
 
+	menu_demo_button: EV_BUTTON
+			-- A menuing window demo.
+
 feature {NONE} -- Implementation: GUI Events
 
 	-- GUI Event-handlers here (on_my_button_click)
@@ -94,8 +101,15 @@ feature {NONE} -- Implementation: GUI Events
 		local
 			l_demo: EMPTY_DEMO_WINDOW
 		do
-			create l_demo.make
-			l_demo.show
+			create l_demo.make_with_parent (Current)
+		end
+
+	on_menu_demo_button_click
+			-- What happens when `menu_demo_button' is clicked.
+		local
+			l_demo: MENU_ENABLED_WINDOW
+		do
+			create l_demo.make_with_parent (Current)
 		end
 
 note

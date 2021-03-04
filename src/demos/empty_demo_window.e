@@ -10,16 +10,17 @@ inherit
 	EV_TITLED_WINDOW
 
 create
-	make
+	make_with_parent
 
 feature {NONE} -- Initialization
 
-	make
+	make_with_parent (a_parent_window: EV_TITLED_WINDOW)
 			-- Initialize Current
 		do
 			make_with_title ("Empty Window Demo")
 			set_size (800, 600)
-			close_request_actions.extend (agent destroy_and_exit_if_last)
+			close_request_actions.extend (agent destroy)
+			show_relative_to_window (a_parent_window)
 		end
 
 note
