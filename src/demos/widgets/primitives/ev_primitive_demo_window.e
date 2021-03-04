@@ -124,10 +124,64 @@ feature {NONE} -- Implementation: GUI Objects
 
 feature {NONE} -- Implementation: GUI Events
 
-
+	-- Coming ...
 
 note
 	design: "[
+		The basic design is to demo each {EV_PRIMITIVE} within a tab of an overall notebook.
+		
+		NOTEBOOKS
+		=========
+		Building the notebook: The notebook is built pretty much the same way as other GUI
+		controls: A) Creation, B) Initialization. There is a small wrinkle in the mix. 
+		
+		Getting references to each "tab" in the notebook has to be done outside of the creation of
+		the interface objects. Take special note of features like `button_tab' and see that
+		it is a "self-creating" attribute. This means, it uses the "attribute" keyword and
+		then provides its own creation based on the Result of a call to `notebook.item_tab'.
+		
+		In order to make this call, we must have both the `notebook' and the `button_cell'
+		objects created first (e.g. in `create_interface_objects'). Once they are created, then
+		we can make a call to `button_tab' and use it. This we do in `initialize' in order
+		to set the "text" on the tab and make it visible in the GUI window.
+		
+		BUTTONS
+		=======
+		
+		Coming ...
+		
+		GAUGES
+		======
+		
+		Coming ...
+		
+		LABELS
+		======
+		
+		Coming ...
+		
+		LISTS
+		=====
+		
+		Coming ...
+		
+		PIXMAPS
+		=======
+		
+		Coming ...
+		
+		TEXT_COMPONENTS
+		===============
+		
+		Coming ...
+		
+		TREEVIEWS
+		=========
+		
+		Coming ...
+
+		]"
+	inheritance: "[
 		Inheritance-tree looking down from {EV_WIDGET}:
 		
 		{EV_WIDGET}
