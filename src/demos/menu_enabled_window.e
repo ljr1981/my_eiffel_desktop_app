@@ -33,6 +33,7 @@ feature {NONE} -- Initialization: Menu
 		do
 			create Result
 			Result.extend (file_menu)
+			Result.extend (demos_menu)
 		end
 
 
@@ -45,7 +46,20 @@ feature {NONE} -- Initialization: Menu
 			Result.extend (file_exit)
 		end
 
+	demos_menu: EV_MENU
+			-- Generate a `demos_menu'.
+		do
+			create Result.make_with_text ("&Demos")
+			Result.extend (demo_gui_containership)
+		end
+
 feature -- Menu Elements
+
+	file_new: EV_MENU_ITEM
+			-- Main window File -> New menu.
+		do
+			create Result.make_with_text_and_action ("&New", agent on_file_new_click)
+		end
 
 	file_exit: EV_MENU_ITEM
 			-- Main window File -> Exit menu.
@@ -53,10 +67,12 @@ feature -- Menu Elements
 			create Result.make_with_text_and_action ("E&xit", agent on_file_exit_click)
 		end
 
-	file_new: EV_MENU_ITEM
-			-- Main window File -> New menu.
+feature -- Menu Elements: Demos
+
+	demo_gui_containership: EV_MENU_ITEM
+			-- Containership demonstration
 		do
-			create Result.make_with_text_and_action ("&New", agent on_file_new_click)
+			create Result.make_with_text_and_action ("&Containership demo", agent on_demo_gui_containership_click)
 		end
 
 feature -- Event Operations
@@ -73,6 +89,14 @@ feature -- Event Operations
 			-- What happens when the File -> Exit menu item is clicked?
 		do
 			destroy
+		end
+
+	on_demo_gui_containership_click
+			-- What happens when the Demos -> Containership demo is clicked?
+		local
+			l_demo: CONTAINERSHIP_BOXING_DEMO_WINDOW
+		do
+			create l_demo.make_with_parent (Current)
 		end
 
 note
