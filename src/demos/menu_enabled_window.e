@@ -47,16 +47,16 @@ feature {NONE} -- Initialization: Menu
 
 feature -- Menu Elements
 
-	file_exit: EV_MENU_ITEM
-			-- Main window File -> Exit menu.
-		do
-			create Result.make_with_text_and_action ("E&xit", agent on_file_exit_click)
-		end
-
 	file_new: EV_MENU_ITEM
 			-- Main window File -> New menu.
 		do
 			create Result.make_with_text_and_action ("&New", agent on_file_new_click)
+		end
+
+	file_exit: EV_MENU_ITEM
+			-- Main window File -> Exit menu.
+		do
+			create Result.make_with_text_and_action ("E&xit", agent on_file_exit_click)
 		end
 
 feature -- Event Operations
