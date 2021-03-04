@@ -51,6 +51,7 @@ feature {NONE} -- Initialization: Menu
 		do
 			create Result.make_with_text ("&Demos")
 			Result.extend (demo_gui_containership)
+			Result.extend (demo_primitives)
 		end
 
 feature -- Menu Elements
@@ -75,6 +76,12 @@ feature -- Menu Elements: Demos
 			create Result.make_with_text_and_action ("&Containership demo", agent on_demo_gui_containership_click)
 		end
 
+	demo_primitives: EV_MENU_ITEM
+			-- Primitives demo
+		do
+			create Result.make_with_text_and_action ("&Primitives demo", agent on_demo_primitives_click)
+		end
+
 feature -- Event Operations
 
 	on_file_new_click
@@ -95,6 +102,14 @@ feature -- Event Operations
 			-- What happens when the Demos -> Containership demo is clicked?
 		local
 			l_demo: CONTAINERSHIP_BOXING_DEMO_WINDOW
+		do
+			create l_demo.make_with_parent (Current)
+		end
+
+	on_demo_primitives_click
+			--
+		local
+			l_demo: EV_PRIMITIVE_DEMO_WINDOW
 		do
 			create l_demo.make_with_parent (Current)
 		end

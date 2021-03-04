@@ -83,8 +83,8 @@ feature {NONE} -- Implementation: GUI Elements
 	left_3,
 	right_1,
 	right_2,
-	right_3: EV_BUTTON;
-			-- Buttons best demo containership because you can
+	right_3: EV_FRAME;
+			-- Frames best demo containership because you can
 			-- 	see the "outlines" of the buttons to understand
 			--	expanded or not-expanded.
 
