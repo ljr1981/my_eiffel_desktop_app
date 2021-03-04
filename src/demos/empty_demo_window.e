@@ -2,6 +2,9 @@ note
 	goal: "[
 		Demonstrate an plain-ole empty window that does nothing but "appear" when called for.
 		]"
+	ca_ignore: "CA022" 	-- Class 'EMPTY_DEMO_WINDOW' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	EMPTY_DEMO_WINDOW

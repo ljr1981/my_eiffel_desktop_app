@@ -4,6 +4,9 @@
 		]"
 	EIS: "name:Containership_and_Expansion",
 			"src=https://github.com/ljr1981/my_eiffel_desktop_app/blob/main/src/demos/containership/Containership_and_Expansion.pdf"
+	ca_ignore: "CA022" 	-- Class 'CONTAINERSHIP_BOXING_DEMO_WINDOW' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	CONTAINERSHIP_BOXING_DEMO_WINDOW

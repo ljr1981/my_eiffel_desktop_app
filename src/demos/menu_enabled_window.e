@@ -2,6 +2,9 @@
 	goal: "[
 		Demonstrate a window with a menu system.
 		]"
+	ca_ignore: "CA022" 	-- Class 'MENU_ENABLED_WINDOW' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	MENU_ENABLED_WINDOW

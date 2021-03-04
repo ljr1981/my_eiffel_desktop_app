@@ -3,6 +3,9 @@ note
 	goal: "[
 		Create Commands, Queries, or both that enhance (support) the testing process.
 		]"
+	ca_ignore: "CA022" 	-- Class 'TEST_SET_SUPPORT' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	TEST_SET_SUPPORT

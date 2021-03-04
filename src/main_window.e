@@ -2,6 +2,10 @@
 	goal: "[
 		Demostrate how to set up a window with a single, simple button control.
 		]"
+	ca_ignore: "CA022" 	-- Class 'MAIN_WINDOW' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
+
 
 class
 	MAIN_WINDOW

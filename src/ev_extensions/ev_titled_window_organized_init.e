@@ -1,5 +1,8 @@
 note
 	description: "A specialized version of {EV_TITLED_WINDOW} with better initialization organization."
+	ca_ignore: "CA022" 	-- Class 'EV_TITLED_WINDOW_ORGANIZED_INIT' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 deferred class
 	EV_TITLED_WINDOW_ORGANIZED_INIT

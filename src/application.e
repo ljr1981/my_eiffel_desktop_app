@@ -3,6 +3,9 @@ note
 		Demonstrate how to coordinate the EV_APPLICATION with EV_TITLED_WINDOW 
 		to form a working desktop application.
 		]"
+	ca_ignore: "CA022" 	-- Class 'APPLICATION' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	APPLICATION

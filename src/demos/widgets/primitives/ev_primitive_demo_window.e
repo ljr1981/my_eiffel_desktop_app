@@ -2,6 +2,9 @@ note
 	goal: "[
 		Demonstration of {EV_PRIMITIVE} classes in a "Notebook" (tabbed).
 		]"
+	ca_ignore: "CA022" 	-- Class 'EV_PRIMITIVE_DEMO_WINDOW' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	EV_PRIMITIVE_DEMO_WINDOW
