@@ -6,9 +6,8 @@ note
 class
 	EV_PRIMITIVE_DEMO_WINDOW
 
-
 inherit
-	EV_ORGANIZED_INIT_TITLED_WINDOW
+	EV_TITLED_WINDOW_ORGANIZED_INIT
 		redefine
 			create_interface_objects
 		end
@@ -121,7 +120,7 @@ feature {NONE} -- Implementation: Extending Initializations
 
 feature {NONE} -- Implementation: Initializations
 
-	init_text_content
+	init_set_text_content
 			--<Precursor>
 		do
 			button_tab.set_text ("Buttons")
@@ -164,6 +163,7 @@ feature {NONE} -- Implementation: Initializations
 		end
 
 	default_padding_and_border: INTEGER = 3
+			--<Precursor>
 
 	init_pixmaps
 			--<Precursor>
@@ -252,7 +252,7 @@ note
 		
 		NEW INHERITANCE
 		===============
-		Check out the end-of-class notes on {EV_ORGANIZED_INIT_TITLED_WINDOW}.
+		Check out the end-of-class notes on {EV_TITLED_WINDOW_ORGANIZED_INIT}.
 		
 		NOTEBOOKS
 		=========

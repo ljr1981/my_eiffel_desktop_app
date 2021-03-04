@@ -2,7 +2,7 @@ note
 	description: "A specialized version of {EV_TITLED_WINDOW} with better initialization organization."
 
 deferred class
-	EV_ORGANIZED_INIT_TITLED_WINDOW
+	EV_TITLED_WINDOW_ORGANIZED_INIT
 
 inherit
 	EV_TITLED_WINDOW
@@ -16,10 +16,14 @@ feature {NONE} -- Initialization
 			--<Precursor>
 		do
 			init_extend_containerships
-			init_text_content
+			init_set_text_content
 			init_text_formatting
 			init_colorization
 			init_sizing
+			init_padding_and_border
+			init_pixmaps
+			init_gui_object_events
+			init_disabling_of_item_expands
 			Precursor
 		end
 
@@ -30,7 +34,7 @@ feature {NONE} -- Initialization: Helpers
 		deferred
 		end
 
-	init_text_content
+	init_set_text_content
 			-- Initialize GUI element text contents.
 		deferred
 		end
