@@ -8,10 +8,9 @@ class
 
 
 inherit
-	EV_TITLED_WINDOW
+	EV_ORGANIZED_INIT_TITLED_WINDOW
 		redefine
-			create_interface_objects,
-			initialize
+			create_interface_objects
 		end
 
 create
@@ -23,38 +22,20 @@ feature {NONE} -- Implementation
 			--<Precursor>
 		do
 			create notebook
-			create button_cell
-			create gauge_cell
-			create label_cell
-			create lists_cell
-			create pixmaps_cell
-			create text_components_cell
-			create treeviews_cell
 
-			Precursor
-		end
+			create button_box
+			create button_1_2_splitter
+			create button_1_frame.make_with_text ("Standard button with text")
+			create button_1.make_with_text ("Button 1")
+			create button_2_frame.make_with_text ("Another button")
+			create button_2.make_with_text ("Button 2")
 
-	initialize
-			--<Precursor>
-		do
-			-- Extending
-			extend (notebook)
-			notebook.extend (button_cell)
-			notebook.extend (gauge_cell)
-			notebook.extend (label_cell)
-			notebook.extend (lists_cell)
-			notebook.extend (pixmaps_cell)
-			notebook.extend (text_components_cell)
-			notebook.extend (treeviews_cell)
-
-			-- Formatting
-			button_tab.set_text ("Buttons")
-			gauge_tab.set_text ("Gauges")
-			label_tab.set_text ("Labels")
-			lists_tab.set_text ("Lists")
-			pixmaps_tab.set_text ("Pixmaps")
-			text_components_tab.set_text ("Text")
-			treeviews_tab.set_text ("Treeviews")
+			create gauge_box
+			create label_box
+			create lists_box
+			create pixmaps_box
+			create text_components_box
+			create treeviews_box
 
 			Precursor
 		end
@@ -68,58 +49,197 @@ feature {NONE} -- Implementation
 			show_relative_to_window (a_parent_window)
 		end
 
+feature {NONE} -- Implementation: Extending Initializations
+
+	init_extend_containerships
+			--<Precursor>
+		do
+			extend (notebook)
+			extend_into_button_box
+			extend_into_gauge_box
+			extend_into_label_box
+			extend_into_lists_box
+			extend_into_pixmaps_box
+			extend_into_text_components_box
+			extend_into_treeviews_box
+		end
+
+	extend_into_button_box
+			-- Extend button demo material into `button_box'
+		do
+			notebook.extend (button_box)
+				-- Lets add a vertical-splitter to make this more interesting ...
+			if attached (create {EV_FRAME}.make_with_text ("Buttons in splitter")) as al_splitter_frame then
+				button_box.extend (al_splitter_frame)
+				al_splitter_frame.extend (button_1_2_splitter)
+
+				-- `button_1' and its frame go in first (upper)
+				button_1_2_splitter.extend (button_1_frame)
+				button_1_frame.extend (button_1)
+
+				-- `button_2' and its frame go in next (lower)
+				button_1_2_splitter.extend (button_2_frame)
+				button_2_frame.extend (button_2)
+			end
+		end
+
+	extend_into_gauge_box
+			-- Extend gauge demo material
+		do
+			notebook.extend (gauge_box)
+		end
+
+	extend_into_label_box
+			-- Extend label demo material
+		do
+			notebook.extend (label_box)
+		end
+
+	extend_into_lists_box
+			-- Extend lists demo material
+		do
+			notebook.extend (lists_box)
+		end
+
+	extend_into_pixmaps_box
+			-- Extend pixmaps demo material
+		do
+			notebook.extend (pixmaps_box)
+		end
+
+	extend_into_text_components_box
+			-- Extend text-components demo material
+		do
+			notebook.extend (text_components_box)
+		end
+
+	extend_into_treeviews_box
+			-- Extend treeview demo material
+		do
+			notebook.extend (treeviews_box)
+		end
+
+feature {NONE} -- Implementation: Initializations
+
+	init_text_content
+			--<Precursor>
+		do
+			button_tab.set_text ("Buttons")
+			gauge_tab.set_text ("Gauges")
+			label_tab.set_text ("Labels")
+			lists_tab.set_text ("Lists")
+			pixmaps_tab.set_text ("Pixmaps")
+			text_components_tab.set_text ("Text")
+			treeviews_tab.set_text ("Treeviews")
+		end
+
+	init_text_formatting
+			--<Precursor>
+		do
+
+		end
+
+	init_colorization
+			--<Precursor>
+		do
+			treeviews_box.set_background_color ((create {EV_STOCK_COLORS}).Green)
+		end
+
+	init_sizing
+			--<Precursor>
+		do
+
+		end
+
+	init_padding_and_border
+			--<Precursor>
+		do
+			set_padding_and_border (button_box)
+			set_padding_and_border (gauge_box)
+			set_padding_and_border (label_box)
+			set_padding_and_border (lists_box)
+			set_padding_and_border (pixmaps_box)
+			set_padding_and_border (text_components_box)
+			set_padding_and_border (treeviews_box)
+		end
+
+	default_padding_and_border: INTEGER = 3
+
+	init_pixmaps
+			--<Precursor>
+		do
+
+		end
+
+	init_gui_object_events
+			--<Precursor>
+		do
+
+		end
+
+	init_disabling_of_item_expands
+			--<Precursor>
+		do
+
+		end
+
 feature {NONE} -- Implementation: GUI Objects
 
 	notebook: EV_NOTEBOOK
 			-- Demo of notebooks with tabs (see below)
 
-	button_cell: EV_CELL
+	button_box: EV_VERTICAL_BOX
+	button_1_2_splitter: EV_VERTICAL_SPLIT_AREA
+	button_1_frame,
+	button_2_frame: EV_FRAME
+	button_1,
+	button_2: EV_BUTTON
 	button_tab: EV_NOTEBOOK_TAB
 			-- Demo of buttons
 		attribute
-			Result := notebook.item_tab (button_cell)
+			Result := notebook.item_tab (button_box)
 		end
 
-	gauge_cell: EV_CELL
+	gauge_box: EV_VERTICAL_BOX
 	gauge_tab: EV_NOTEBOOK_TAB
 			-- Demo of gauges
 		attribute
-			Result := notebook.item_tab (gauge_cell)
+			Result := notebook.item_tab (gauge_box)
 		end
 
-	label_cell: EV_CELL
+	label_box: EV_VERTICAL_BOX
 	label_tab: EV_NOTEBOOK_TAB
 			-- Demo of labels
 		attribute
-			Result := notebook.item_tab (label_cell)
+			Result := notebook.item_tab (label_box)
 		end
 
-	lists_cell: EV_CELL
+	lists_box: EV_VERTICAL_BOX
 	lists_tab: EV_NOTEBOOK_TAB
 			-- Demo of labels
 		attribute
-			Result := notebook.item_tab (lists_cell)
+			Result := notebook.item_tab (lists_box)
 		end
 
-	pixmaps_cell: EV_CELL
+	pixmaps_box: EV_VERTICAL_BOX
 	pixmaps_tab: EV_NOTEBOOK_TAB
 			-- Demo of labels
 		attribute
-			Result := notebook.item_tab (pixmaps_cell)
+			Result := notebook.item_tab (pixmaps_box)
 		end
 
-	text_components_cell: EV_CELL
+	text_components_box: EV_VERTICAL_BOX
 	text_components_tab: EV_NOTEBOOK_TAB
 			-- Demo of labels
 		attribute
-			Result := notebook.item_tab (text_components_cell)
+			Result := notebook.item_tab (text_components_box)
 		end
 
-	treeviews_cell: EV_CELL
+	treeviews_box: EV_VERTICAL_BOX
 	treeviews_tab: EV_NOTEBOOK_TAB
 			-- Demo of labels
 		attribute
-			Result := notebook.item_tab (treeviews_cell)
+			Result := notebook.item_tab (treeviews_box)
 		end
 
 feature {NONE} -- Implementation: GUI Events
@@ -129,6 +249,10 @@ feature {NONE} -- Implementation: GUI Events
 note
 	design: "[
 		The basic design is to demo each {EV_PRIMITIVE} within a tab of an overall notebook.
+		
+		NEW INHERITANCE
+		===============
+		Check out the end-of-class notes on {EV_ORGANIZED_INIT_TITLED_WINDOW}.
 		
 		NOTEBOOKS
 		=========
@@ -140,7 +264,7 @@ note
 		it is a "self-creating" attribute. This means, it uses the "attribute" keyword and
 		then provides its own creation based on the Result of a call to `notebook.item_tab'.
 		
-		In order to make this call, we must have both the `notebook' and the `button_cell'
+		In order to make this call, we must have both the `notebook' and the `button_box'
 		objects created first (e.g. in `create_interface_objects'). Once they are created, then
 		we can make a call to `button_tab' and use it. This we do in `initialize' in order
 		to set the "text" on the tab and make it visible in the GUI window.
