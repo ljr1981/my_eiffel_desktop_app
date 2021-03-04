@@ -3,8 +3,7 @@ note
 		Demonstration of how visual and non-visual EV_WIDGET containership works in Eiffel Vision2.
 		]"
 	EIS: "name:Containership_and_Expansion",
-			"src=Containership_and_Expansion.pdf",
-			"protocol=PDF"
+			"src=https://github.com/ljr1981/my_eiffel_desktop_app/blob/main/src/demos/containership/Containership_and_Expansion.pdf"
 
 class
 	CONTAINERSHIP_BOXING_DEMO_WINDOW
