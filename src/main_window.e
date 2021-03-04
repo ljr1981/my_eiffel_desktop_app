@@ -1,3 +1,8 @@
+﻿note
+	goal: "[
+		Demostrate how to set up a window with a single, simple button control.
+		]"
+
 class
 	MAIN_WINDOW
 
@@ -16,8 +21,10 @@ feature {NONE} -- Initialization
 	make
 			-- Init Current
 		do
+			-- Overall window formatting and other matters are best handled here.
 			make_with_title ("Eiffel Project Creator")
 			set_size (800, 600)
+			close_request_actions.extend (agent destroy_and_exit_if_last)
 		end
 
 	create_interface_objects
@@ -33,7 +40,7 @@ feature {NONE} -- Initialization
 			create main_box
 			create button_box
 			-- Buttons
-			create box_demo_button.make_with_text ("Box Demo Window")
+			create empty_demo_button.make_with_text ("Box Demo Window")
 		end
 
 	initialize
@@ -44,22 +51,22 @@ feature {NONE} -- Initialization
 				goes here. The Precursor call must remain.
 				]"
 		do
-			-- Your code precedes.
-			Precursor
-
 			-- Extending
 			extend (main_box)
 			main_box.extend (button_box)
-			button_box.extend (box_demo_button)
+			button_box.extend (empty_demo_button)
 
 			-- Formatting
 			main_box.disable_item_expand (button_box)
-			button_box.disable_item_expand (box_demo_button)
+			button_box.disable_item_expand (empty_demo_button)
 			button_box.set_padding (3)
 			button_box.set_border_width (3)
 
 			-- Actions
-			box_demo_button.select_actions.extend (agent on_box_demo_button_click)
+			empty_demo_button.select_actions.extend (agent on_empty_demo_button_click)
+
+			-- Your code generally precedes.
+			Precursor
 		end
 
 feature {NONE} -- Implementation: GUI Objects
@@ -67,22 +74,46 @@ feature {NONE} -- Implementation: GUI Objects
 	-- GUI Object features here (Example: my_button: EV_BUTTON)
 
 	main_box: EV_VERTICAL_BOX
+			-- The primary "box" for the window.
 
 	button_box: EV_HORIZONTAL_BOX
+			-- A box for buttons (design choice-not best-practice)
+			-- You have a blank slate on containership/organization.
 
-	box_demo_button: EV_BUTTON
+	empty_demo_button: EV_BUTTON
+			-- A button to launch another window.
+			-- There are many ways to launch windows and perform
+			-- other tasking (this is what agents perfect for).
 
 feature {NONE} -- Implementation: GUI Events
 
 	-- GUI Event-handlers here (on_my_button_click)
 
-	on_box_demo_button_click
-			-- What happens when `box_demo_button' is clicked.
+	on_empty_demo_button_click
+			-- What happens when `empty_demo_button' is clicked.
 		local
-			l_demo: BOX_DEMO_WINDOW
+			l_demo: EMPTY_DEMO_WINDOW
 		do
 			create l_demo.make
 			l_demo.show
 		end
+
+note
+	pay_attention: "Note that there is no semi-colon as in APPLICATION."
+	design: "[
+		This design is going to be a bit more complex. Over the years, I have learned to
+		organize my window-creation into a few broad strokes:
+		
+		1. Always do redefines of create_interface_objects and initialize.
+			WHY?: Making a window requires GUI objects and they need initialization.
+		2. Never do containership or formatting tasks in create_interface_objects.
+			WHY?: creation is only about creation. You're best-off to keep it that way.
+		3. Split the intialization of GUI objects into phases:
+			a. Extending—handling containership tasks
+			b. Formatting—how things appear visually
+			c. Actions—how things behave and respond to events.
+			d. Other—misc tasks (if any)
+			e. Precursor call—pay attention here. Your Precursor call might go in the middle.
+		]"
 
 end
