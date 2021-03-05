@@ -42,7 +42,7 @@ feature -- Query Functions
 		end
 
 	string_value (a_object: detachable JSON_OBJECT; a_key: STRING): STRING
-			--
+			-- `string_value' for `a_key' in `a_object'
 		do
 			create Result.make_empty
 			if
@@ -54,7 +54,7 @@ feature -- Query Functions
 		end
 
 	boolean_value (a_object: detachable JSON_OBJECT; a_key: STRING): BOOLEAN
-			--
+			-- `boolean_value' for `a_key' in `a_object'
 		do
 			create Result
 			if
@@ -65,13 +65,13 @@ feature -- Query Functions
 			end
 		end
 
+feature {NONE} -- Implementation
+
 	json_string (a_string: STRING): JSON_STRING
 			-- Convert `a_string' to JSON_STRING.
 		do
 			create Result.make_from_string (a_string)
 		end
-
-feature {NONE} -- Implementation
 
 	prep_json_string (a_json: STRING): STRING
 			-- Prepare `a_json' for parsing.
@@ -93,6 +93,8 @@ feature {NONE} -- Implementation
 
 note
 	design: "[
+		The JSON library has these basic "values":
+		
 		JSON_VALUE
 			JSON_ARRAY
 			JSON_BOOLEAN
@@ -100,6 +102,11 @@ note
 			JSON_NUMBER
 			JSON_OBJECT
 			JSON_STRING
+			
+		JSON_OBJECTs and JSON_ARRAYs can be populated by JSON_VALUE items. So, the trick
+		is to be able to easily walk a JSON-structure, culling out each level of data to
+		place it properly in some receiving object. This process is nested because the
+		object-graphs can be nested as well.
 		]"
 
 end
