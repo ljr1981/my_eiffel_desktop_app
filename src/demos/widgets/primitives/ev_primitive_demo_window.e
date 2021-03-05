@@ -43,6 +43,8 @@ feature {NONE} -- Implementation
 
 			create label_box
 			create label_1
+			create label_bg_color_button.make_with_text ("Set background")
+			create label_fg_color_button.make_with_text ("Set foreground")
 
 			create lists_box
 			create pixmaps_box
@@ -107,6 +109,8 @@ feature {NONE} -- Implementation: Extending Initializations
 		do
 			notebook.extend (label_box)
 			label_box.extend (label_1)
+			label_box.extend (label_bg_color_button)
+			label_box.extend (label_fg_color_button)
 		end
 
 	extend_into_lists_box
@@ -192,7 +196,14 @@ feature {NONE} -- Implementation: Initializations
 	init_gui_object_events
 			--<Precursor>
 		do
+				-- Next line uses the {EV_BUTTON_EXT} class ... simpler, eh?
 
+			label_bg_color_button.on_click (agent on_label_1_background_click)
+
+
+				-- This uses the standard {EV_BUTTON} class ... harder to read?
+
+			label_fg_color_button.select_actions.extend (agent on_click_label_1_foreground)
 		end
 
 	init_disabling_of_item_expands
@@ -229,6 +240,8 @@ feature {NONE} -- Implementation: GUI Objects
 
 	label_box: EV_VERTICAL_BOX
 	label_1: EV_LABEL
+	label_bg_color_button,
+	label_fg_color_button: EV_BUTTON_EXT
 	label_tab: EV_NOTEBOOK_TAB
 			-- Demo of labels
 		attribute
@@ -265,7 +278,38 @@ feature {NONE} -- Implementation: GUI Objects
 
 feature {NONE} -- Implementation: GUI Events
 
-	-- Coming ...
+	on_label_1_background_click
+			-- Set the background color of `label_1'
+		note
+			naming_convention: "[
+				This is one naming-convention, where "on_" prefix denotes
+				that this routine is a response to some event (user or otherwise).
+				]"
+		local
+			l_picker: EV_COLOR_DIALOG
+		do
+			create l_picker
+			l_picker.show_modal_to_window (Current)
+			label_1.set_background_color (l_picker.color)
+		end
+
+	on_click_label_1_foreground
+			-- Set the foreground color of `label_1'
+		note
+			naming_convention: "[
+				This is a variation of the naming-convention, where instead of
+				putting the event-name at the end of the routine-name, we put it
+				totally at the front (e.g. "on_*_click" become "on_click_*")
+				
+				Which do you prefer? Having solid naming-conventions will be an asset!
+				]"
+		local
+			l_picker: EV_COLOR_DIALOG
+		do
+			create l_picker
+			l_picker.show_modal_to_window (Current)
+			label_1.set_foreground_color (l_picker.color)
+		end
 
 note
 	design: "[
