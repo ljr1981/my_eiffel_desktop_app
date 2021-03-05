@@ -13,6 +13,8 @@ feature -- Test routines
 			-- Test the CSV_HANDLER.read_from_data routine.
 		note
 			testing:  "covers/{CSV_HANDLER}.read_from_data",
+					"covers/{CSV_HANDLER}.last_read_data",
+					"covers/{CSV_HANDLER}.last_row_col_counts",
 					"execution/isolated"
 			design: "[
 				This test exercises the heart of the CSV handler. The synopsis is:
@@ -31,19 +33,23 @@ feature -- Test routines
 			l_csv: CSV_HANDLER
 		do
 			create l_csv
-			l_csv.read_from_data (csv_1.split ('%N'))
+			l_csv.read_from_data (("").split ({CSV_HANDLER}.new_line))
+
+			l_csv.read_from_data (csv_1.split ({CSV_HANDLER}.new_line))
 
 				-- Nice and even column counts!
-			check has_data: attached l_csv.last_read_data as al_data then
+			check has_data: attached l_csv.last_data as al_data then
+				assert_equal ("row_col_1", [3, 3], l_csv.last_row_col_counts)
 				assert_strings_equal ("1_1", "this", al_data [1, 1])
 				assert_strings_equal ("2_2", "than", al_data [2, 2])
 				assert_strings_equal ("3_3", "this", al_data [3, 3])
 			end
 
 				-- Can we break it with haphazard column counts?
-			l_csv.read_from_data (csv_2.split ('%N'))
+			l_csv.read_from_data (csv_2.split ({CSV_HANDLER}.new_line))
 
-			check has_data_2: attached l_csv.last_read_data as al_data then
+			check has_data_2: attached l_csv.last_data as al_data then
+				assert_equal ("row_col_2", [3, 6], l_csv.last_row_col_counts)
 				assert_strings_equal ("1_1", "this", al_data [1, 1])
 				assert_strings_equal ("2_2", "than", al_data [2, 2])
 				assert_strings_equal ("2_5", "else", al_data [2, 5])
