@@ -199,6 +199,7 @@ feature {NONE} -- Implementation: Initializations
 				-- Next line uses the {EV_BUTTON_EXT} class ... simpler, eh?
 
 			label_bg_color_button.on_click (agent on_label_1_background_click)
+			label_1.on_click (agent on_label_click)
 
 
 				-- This uses the standard {EV_BUTTON} class ... harder to read?
@@ -239,7 +240,7 @@ feature {NONE} -- Implementation: GUI Objects
 		end
 
 	label_box: EV_VERTICAL_BOX
-	label_1: EV_LABEL
+	label_1: EV_LABEL_EXT
 	label_bg_color_button,
 	label_fg_color_button: EV_BUTTON_EXT
 	label_tab: EV_NOTEBOOK_TAB
@@ -277,6 +278,21 @@ feature {NONE} -- Implementation: GUI Objects
 		end
 
 feature {NONE} -- Implementation: GUI Events
+
+	on_label_click
+			-- What happens when `label_1' is clicked?
+		note
+			design: "[
+				Let's put up a message dialog with a OK-button
+				which closes the dialog.
+				]"
+		local
+			l_message: EV_MESSAGE_DIALOG
+		do
+			create l_message.make_with_text ("Label clicked")
+			l_message.set_buttons_and_actions (<<"OK">>, <<agent l_message.destroy>>)
+			l_message.show_modal_to_window (Current)
+		end
 
 	on_label_1_background_click
 			-- Set the background color of `label_1'

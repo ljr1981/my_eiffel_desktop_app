@@ -5,6 +5,8 @@ note
 		]"
 	EIS: "name=posted_CA022_issue_to_Eiffel_google_groups",
 			"src=https://groups.google.com/g/eiffel-users/c/whDZWeeHKMg"
+	EIS: "name=handled_CA022_issue_in_v20_11_see_compiler_notes",
+			"src=https://www.eiffel.org/doc/version/trunk/eiffelstudio/Release_notes_for_EiffelStudio_20.11"
 	ca_ignore: "CA022" 	-- Class 'APPLICATION' contains unreachable code
 						--	that should be considered to be removed.
 						--	REALITY: The structure of the code is okay.
