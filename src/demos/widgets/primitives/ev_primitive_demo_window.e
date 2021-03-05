@@ -200,7 +200,8 @@ feature {NONE} -- Implementation: Initializations
 				-- Vs ...
 			label_fg_color_button.select_actions.extend (agent on_click_label_1_foreground)
 
-			label_1.on_click (agent on_label_click)
+			label_1.on_double_click (agent on_double_click_label)
+--			label_1.on_click (agent on_label_click) -- may have to adjust mouse-sensitivity
 				-- Vs ...
 			label_1.pointer_button_press_actions.extend (agent on_label_click_2)
 
@@ -298,6 +299,16 @@ feature {NONE} -- Implementation: GUI Events
 			-- Compare to `on_label_click' above.
 		do
 			do_nothing -- this is just to prove the point.
+		end
+
+	on_double_click_label
+			--
+		local
+			l_message: EV_MESSAGE_DIALOG
+		do
+			create l_message.make_with_text ("Label Double-clicked")
+			l_message.set_buttons_and_actions (<<"OK">>, <<agent l_message.destroy>>)
+			l_message.show_modal_to_window (Current)
 		end
 
 	on_label_1_background_click
