@@ -15,7 +15,17 @@ feature -- Test routines
 			testing:  "covers/{CSV_HANDLER}.read_from_data",
 					"execution/isolated"
 			design: "[
-				This test exercises the heart of the CSV handler.
+				This test exercises the heart of the CSV handler. The synopsis is:
+				
+				create l_csv				-- Creates an instance of CSV_HANDLER in l_csv
+				l_csv.read_from_data (...)	-- See csv_1 and csv_2 STRINGs below
+				
+				We then do an attachment check on l_csv.last_read_data. Why?
+				The reading of data may or may not be successful, because we are
+				depending on an outside data-source that might be malformed. If
+				the read fails for some reason, then the l_csv.last_read_data will
+				be void (e.g. detached). So, we do the attachment test to ensure
+				we have data. This is found in line #37 (below). Now, we can read (e.g. al_data [x, y])
 				]"
 		local
 			l_csv: CSV_HANDLER

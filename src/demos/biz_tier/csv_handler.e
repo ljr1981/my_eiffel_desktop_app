@@ -42,30 +42,43 @@ feature -- Basic Operations
 			-- Read `a_data' into `last_read_data'
 		local
 			l_data: attached like last_read_data
-			l_rows,
-			l_cols: INTEGER
+			l_rows_cols: attached like rows_cols_tuple_anchor
 		do
 			if attached a_data as al_raw then
-				l_rows := al_raw.count
-				across
-					al_raw as ic
-				loop
-					if attached ic.item.split (',').count as al_cols and then al_cols > l_cols then
-						l_cols := al_cols
-					end
-				end
-				create l_data.make_filled ("", l_rows, l_cols)
-				across
-					al_raw as ic
-				loop
-					across
-						ic.item.split (',') as ic_items
-					loop
+					-- Get row/col count
+				l_rows_cols := row_max_col_counts (al_raw)
+					-- Load l_data ...
+				create l_data.make_filled ("", l_rows_cols.rows, l_rows_cols.max_cols)
+				across al_raw as ic loop
+					across ic.item.split (',') as ic_items loop
 						l_data.put (ic_items.item, ic.cursor_index, ic_items.cursor_index)
 					end
 				end
 				last_read_data := l_data
 			end
 		end
+
+feature {NONE} -- Implementation
+
+	row_max_col_counts (a_data: attached like last_read_raw): attached like rows_cols_tuple_anchor
+			-- Compute max rows/cols for `a_data'.
+		local
+			l_rows,
+			l_max_cols: INTEGER
+		do
+			if attached a_data as al_raw then
+					-- Get row/col count
+				l_rows := al_raw.count
+				across al_raw as ic loop
+					if attached ic.item.split (',').count as al_cols and then al_cols > l_max_cols then
+						l_max_cols := al_cols
+					end
+				end
+			end
+			Result := [l_rows, l_max_cols]
+		end
+
+	rows_cols_tuple_anchor: detachable TUPLE [rows, max_cols: INTEGER];
+			-- Type anchor for max rows/cols counts.
 
 end
