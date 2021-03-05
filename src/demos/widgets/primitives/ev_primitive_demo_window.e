@@ -196,15 +196,14 @@ feature {NONE} -- Implementation: Initializations
 	init_gui_object_events
 			--<Precursor>
 		do
-				-- Next line uses the {EV_BUTTON_EXT} class ... simpler, eh?
-
 			label_bg_color_button.on_click (agent on_label_1_background_click)
-			label_1.on_click (agent on_label_click)
-
-
-				-- This uses the standard {EV_BUTTON} class ... harder to read?
-
+				-- Vs ...
 			label_fg_color_button.select_actions.extend (agent on_click_label_1_foreground)
+
+			label_1.on_click (agent on_label_click)
+				-- Vs ...
+			label_1.pointer_button_press_actions.extend (agent on_label_click_2)
+
 		end
 
 	init_disabling_of_item_expands
@@ -292,6 +291,13 @@ feature {NONE} -- Implementation: GUI Events
 			create l_message.make_with_text ("Label clicked")
 			l_message.set_buttons_and_actions (<<"OK">>, <<agent l_message.destroy>>)
 			l_message.show_modal_to_window (Current)
+		end
+
+	on_label_click_2 (a_x, a_y, a_button: INTEGER; a_x_tilt, a_y_tilt, pressure: DOUBLE; a_screen_x, a_screen_y: INTEGER)
+			-- The other choice ... not nearly as readable!
+			-- Compare to `on_label_click' above.
+		do
+			do_nothing -- this is just to prove the point.
 		end
 
 	on_label_1_background_click
