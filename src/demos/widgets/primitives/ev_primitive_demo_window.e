@@ -2,7 +2,12 @@ note
 	goal: "[
 		Demonstration of {EV_PRIMITIVE} classes in a "Notebook" (tabbed).
 		]"
-	EIS: "name=vision_demo_exe", "src=$(ISE_EIFFEL)\vision2_demo\spec\win64\bin"
+
+	EIS: "name=vision_demo_dir", "src=$(ISE_EIFFEL)\vision2_demo\spec\win64\bin"
+	EIS: "name=vision_demo_exe", "src=$(ISE_EIFFEL)\vision2_demo\spec\win64\bin\vision2_demo.exe"
+	EIS: "name=eiffel_image_embed_dir", "src=$(ISE_EIFFEL)\tools\spec\win64\bin"
+	EIS: "name=eiffel_image_embed_exe", "src=$(ISE_EIFFEL)\tools\spec\win64\bin\eimgemb.exe"
+
 	ca_ignore: "CA022" 	-- Class 'EV_PRIMITIVE_DEMO_WINDOW' contains unreachable code
 						--	that should be considered to be removed.
 						--	REALITY: The structure of the code is okay.
