@@ -37,6 +37,8 @@ feature {NONE} -- Implementation
 			create spinner_1.make_with_value_range (1 |..| 1_000)
 
 			create label_box
+			create label_1
+
 			create lists_box
 			create pixmaps_box
 			create text_components_box
@@ -99,6 +101,7 @@ feature {NONE} -- Implementation: Extending Initializations
 			-- Extend label demo material
 		do
 			notebook.extend (label_box)
+			label_box.extend (label_1)
 		end
 
 	extend_into_lists_box
@@ -137,12 +140,15 @@ feature {NONE} -- Implementation: Initializations
 			pixmaps_tab.set_text ("Pixmaps")
 			text_components_tab.set_text ("Text")
 			treeviews_tab.set_text ("Treeviews")
+
+			spinner_1.set_text ("Spinner 1")
+			label_1.set_text ("Label 1")
 		end
 
 	init_text_formatting
 			--<Precursor>
 		do
-			spinner_1.set_text ("Gauge")
+
 		end
 
 	init_colorization
@@ -187,7 +193,8 @@ feature {NONE} -- Implementation: Initializations
 	init_disabling_of_item_expands
 			--<Precursor>
 		do
-			disbale_item_expanding (spinner_box, spinner_1)
+			disable_item_expanding (spinner_box, spinner_1)
+			disable_item_expanding (label_box, label_1)
 		end
 
 feature {NONE} -- Implementation: GUI Objects
@@ -216,6 +223,7 @@ feature {NONE} -- Implementation: GUI Objects
 		end
 
 	label_box: EV_VERTICAL_BOX
+	label_1: EV_LABEL
 	label_tab: EV_NOTEBOOK_TAB
 			-- Demo of labels
 		attribute
