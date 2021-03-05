@@ -57,6 +57,30 @@ feature -- Test routines
 			end
 		end
 
+	outputs_test
+			-- Test outputs
+		note
+			testing:  "covers/{CSV_HANDLER}.out",
+					"covers/{CSV_HANDLER}.out_to_file",
+					"covers/{CSV_HANDLER}.read_from_filename",
+					"execution/isolated"
+		local
+			l_csv: CSV_HANDLER
+		do
+			create l_csv
+			l_csv.read_from_data (csv_1.split ({CSV_HANDLER}.new_line))			-- From data 1
+			assert_strings_equal ("outs_match_1", csv_1, l_csv.out)				-- Should match out
+			l_csv.out_to_file (create {PATH}.make_from_string ("csv_1.txt"))	-- Save to file
+			l_csv.read_from_filename ("csv_1.txt")								-- Read that file
+			assert_strings_equal ("outs_match_1b", csv_1, l_csv.out)			-- Should match out
+
+			l_csv.read_from_data (csv_2.split ({CSV_HANDLER}.new_line))			-- From data 2
+			assert_strings_equal ("outs_match_2", csv_2, l_csv.out)				-- Should match out
+			l_csv.out_to_file (create {PATH}.make_from_string ("csv_2.txt"))	-- Save to file
+			l_csv.read_from_filename ("csv_2.txt")								-- Read file
+			assert_strings_equal ("outs_match_2b", csv_2, l_csv.out)				-- Should match out
+		end
+
 feature {NONE} -- Test Support
 
 	csv_1: STRING = "[

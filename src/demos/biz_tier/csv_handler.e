@@ -4,6 +4,12 @@ note
 class
 	CSV_HANDLER
 
+inherit
+	ANY
+		redefine
+			out
+		end
+
 feature -- Access
 
 	last_data: detachable ARRAY2 [STRING]
@@ -65,7 +71,7 @@ feature -- Basic Operations
 					-- Get row/col count
 				l_rows_cols := row_max_col_counts (al_raw)
 					-- Load l_data ...
-				create l_data.make_filled (space, l_rows_cols.rows, l_rows_cols.max_cols)
+				create l_data.make_filled (Empty_string, l_rows_cols.rows, l_rows_cols.max_cols)
 				across al_raw as ic loop
 					across ic.item.split (comma_char) as ic_items loop
 						l_data.put (ic_items.item, ic.cursor_index, ic_items.cursor_index)
@@ -75,6 +81,54 @@ feature -- Basic Operations
 			end
 		ensure
 			valid_row_count: last_data_attached.height = a_data.count
+		end
+
+feature -- Outputs
+
+	out: STRING
+			--<Precursor>
+		do
+			create Result.make_empty
+			if attached last_data as al_data and then
+				not al_data.is_empty
+			then
+				across
+					1 |..| al_data.height as i
+				loop
+					across
+						1 |..| al_data.width as j
+					loop
+						if
+							attached al_data [i.item, j.item] as al_data_item and then
+							not al_data_item.is_empty
+						then
+							Result.append_string_general (al_data [i.item, j.item])
+							Result.append_character (Comma_char)
+						end
+					end
+					if Result [Result.count] = Comma_char then
+						Result.remove_tail (1)
+					end
+					Result.append_character (New_line)
+				end
+				if Result [Result.count] = New_line then
+					Result.remove_tail (1)
+				end
+			end
+
+		end
+
+	out_to_file (a_path: PATH)
+			-- Send `out' to file at `a_path'.
+		local
+			l_file: PLAIN_TEXT_FILE
+		do
+			create l_file.make_create_read_write (a_path.name.out)
+			l_file.put_string (out)
+			l_file.close
+		ensure
+			has_file: attached (create {PLAIN_TEXT_FILE}.make_with_path (a_path)) as al_file and then
+						al_file.exists
 		end
 
 feature {NONE} -- Implementation
@@ -115,6 +169,8 @@ feature {TEST_SET_BRIDGE} -- Implementation: Constants
 
 	space: STRING = " "
 			-- Represents space string as named constant.
+
+	empty_string: STRING = ""
 
 invariant
 	valid_counts: not attached last_data xor
