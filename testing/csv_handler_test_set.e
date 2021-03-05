@@ -32,12 +32,12 @@ feature -- Test routines
 		local
 			l_csv: CSV_HANDLER
 		do
+				-- Empty input stream ...
 			create l_csv
 			l_csv.read_from_data (("").split ({CSV_HANDLER}.new_line))
 
+				-- Add some data ...
 			l_csv.read_from_data (csv_1.split ({CSV_HANDLER}.new_line))
-
-				-- Nice and even column counts!
 			check has_data: attached l_csv.last_data as al_data then
 				assert_equal ("row_col_1", [3, 3], l_csv.last_row_col_counts)
 				assert_strings_equal ("1_1", "this", al_data [1, 1])
@@ -47,7 +47,6 @@ feature -- Test routines
 
 				-- Can we break it with haphazard column counts?
 			l_csv.read_from_data (csv_2.split ({CSV_HANDLER}.new_line))
-
 			check has_data_2: attached l_csv.last_data as al_data then
 				assert_equal ("row_col_2", [3, 6], l_csv.last_row_col_counts)
 				assert_strings_equal ("1_1", "this", al_data [1, 1])
