@@ -6,8 +6,8 @@ class
 
 feature -- Query Functions
 
-	json_string_to_json_object (a_json: STRING): detachable JSON_OBJECT
-			-- Parse `a_json' to its resulting JSON_OBJECT (if any).
+	string_to_object (a_json: STRING): detachable JSON_OBJECT
+			-- Parse `a_json' `string_to_object' (if any).
 		local
 			l_parser: JSON_PARSER
 		do

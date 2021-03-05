@@ -19,13 +19,14 @@ feature -- Test routines
 			l_object: detachable JSON_OBJECT
 		do
 			create l_handler
-			l_object := l_handler.json_string_to_json_object (json_small)
-			assert_equal ("id", 1, l_handler.number_value (l_object, "id"))
-			assert_strings_equal ("first_name", "Laurice", l_handler.string_value (l_object, "first_name"))
-			assert_strings_equal ("last_name", "Gilley", l_handler.string_value (l_object, "last_name"))
-			assert_strings_equal ("email", "lgilley0@ca.gov", l_handler.string_value (l_object, "email"))
-			assert_strings_equal ("gender", "Genderfluid", l_handler.string_value (l_object, "gender"))
-			assert_strings_equal ("ip_address", "160.143.175.200", l_handler.string_value (l_object, "ip_address"))
+			l_object := l_handler.string_to_object (json_small)
+			
+			assert_equal ("id", 				1, 					l_handler.number_value (l_object, "id"))
+			assert_strings_equal ("first_name", "Laurice", 			l_handler.string_value (l_object, "first_name"))
+			assert_strings_equal ("last_name", 	"Gilley", 			l_handler.string_value (l_object, "last_name"))
+			assert_strings_equal ("email", 		"lgilley0@ca.gov", 	l_handler.string_value (l_object, "email"))
+			assert_strings_equal ("gender", 	"Genderfluid", 		l_handler.string_value (l_object, "gender"))
+			assert_strings_equal ("ip_address", "160.143.175.200", 	l_handler.string_value (l_object, "ip_address"))
 		end
 
 feature {NONE} -- Test Support
