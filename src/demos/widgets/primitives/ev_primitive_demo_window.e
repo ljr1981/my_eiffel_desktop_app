@@ -2,6 +2,7 @@ note
 	goal: "[
 		Demonstration of {EV_PRIMITIVE} classes in a "Notebook" (tabbed).
 		]"
+	EIS: "name=vision_demo_exe", "src=$(ISE_EIFFEL)\vision2_demo\spec\win64\bin"
 	ca_ignore: "CA022" 	-- Class 'EV_PRIMITIVE_DEMO_WINDOW' contains unreachable code
 						--	that should be considered to be removed.
 						--	REALITY: The structure of the code is okay.
@@ -32,7 +33,9 @@ feature {NONE} -- Implementation
 			create button_2_frame.make_with_text ("Another button")
 			create button_2.make_with_text ("Button 2")
 
-			create gauge_box
+			create spinner_box
+			create spinner_1.make_with_value_range (1 |..| 1_000)
+
 			create label_box
 			create lists_box
 			create pixmaps_box
@@ -88,7 +91,8 @@ feature {NONE} -- Implementation: Extending Initializations
 	extend_into_gauge_box
 			-- Extend gauge demo material
 		do
-			notebook.extend (gauge_box)
+			notebook.extend (spinner_box)
+			spinner_box.extend (spinner_1)
 		end
 
 	extend_into_label_box
@@ -127,7 +131,7 @@ feature {NONE} -- Implementation: Initializations
 			--<Precursor>
 		do
 			button_tab.set_text ("Buttons")
-			gauge_tab.set_text ("Gauges")
+			spinner_tab.set_text ("Gauges")
 			label_tab.set_text ("Labels")
 			lists_tab.set_text ("Lists")
 			pixmaps_tab.set_text ("Pixmaps")
@@ -138,7 +142,7 @@ feature {NONE} -- Implementation: Initializations
 	init_text_formatting
 			--<Precursor>
 		do
-
+			spinner_1.set_text ("Gauge")
 		end
 
 	init_colorization
@@ -157,7 +161,7 @@ feature {NONE} -- Implementation: Initializations
 			--<Precursor>
 		do
 			set_padding_and_border (button_box)
-			set_padding_and_border (gauge_box)
+			set_padding_and_border (spinner_box)
 			set_padding_and_border (label_box)
 			set_padding_and_border (lists_box)
 			set_padding_and_border (pixmaps_box)
@@ -183,7 +187,7 @@ feature {NONE} -- Implementation: Initializations
 	init_disabling_of_item_expands
 			--<Precursor>
 		do
-
+			disbale_item_expanding (spinner_box, spinner_1)
 		end
 
 feature {NONE} -- Implementation: GUI Objects
@@ -203,11 +207,12 @@ feature {NONE} -- Implementation: GUI Objects
 			Result := notebook.item_tab (button_box)
 		end
 
-	gauge_box: EV_VERTICAL_BOX
-	gauge_tab: EV_NOTEBOOK_TAB
-			-- Demo of gauges
+	spinner_box: EV_VERTICAL_BOX
+	spinner_1: EV_SPIN_BUTTON
+	spinner_tab: EV_NOTEBOOK_TAB
+			-- Demo of spinners
 		attribute
-			Result := notebook.item_tab (gauge_box)
+			Result := notebook.item_tab (spinner_box)
 		end
 
 	label_box: EV_VERTICAL_BOX

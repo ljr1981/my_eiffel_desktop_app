@@ -89,12 +89,14 @@ feature {NONE} -- Initialization: Helpers
 		deferred
 		end
 
-	disbale_item_expanding (a_parent: EV_BOX; a_child: EV_WIDGET)
+	disbale_item_expanding (a_parent: detachable EV_BOX; a_child: EV_WIDGET)
 			-- Handle disable of item expand of `a_child' in `a_parent'.
 		require
 			has_child: a_child.has_parent and then attached a_child.parent as al_parent and then al_parent ~ a_parent
 		do
-			a_parent.disable_item_expand (a_child)
+			if attached a_parent as al_parent then
+				al_parent.disable_item_expand (a_child)
+			end
 		end
 
 note
