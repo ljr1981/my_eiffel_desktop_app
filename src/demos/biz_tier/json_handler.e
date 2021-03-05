@@ -4,4 +4,102 @@ note
 class
 	JSON_HANDLER
 
+feature -- Query Functions
+
+	json_string_to_json_object (a_json: STRING): detachable JSON_OBJECT
+			-- Parse `a_json' to its resulting JSON_OBJECT (if any).
+		local
+			l_parser: JSON_PARSER
+		do
+			create l_parser.make_with_string (prep_json_string (a_json))
+			l_parser.parse_content
+			if attached l_parser.parsed_json_object as al_object then
+				Result := al_object.twin
+			end
+		end
+
+	number_value (a_object: detachable JSON_OBJECT; a_key: STRING): NUMERIC
+			-- `number_value' for `a_key' in `a_object'
+		do
+			if
+				attached a_object as al_object and then
+				attached {JSON_NUMBER} al_object.item (json_string (a_key)) as al_item
+			then
+				if al_item.is_double then
+					Result := al_item.double_item
+				elseif al_item.is_integer then
+					Result := al_item.integer_type
+				elseif al_item.is_natural then
+					Result := al_item.natural_64_item
+				elseif al_item.is_real then
+					Result := al_item.real_type
+				else
+					Result := 0
+				end
+			else
+				Result := 0
+			end
+		end
+
+	string_value (a_object: detachable JSON_OBJECT; a_key: STRING): STRING
+			--
+		do
+			create Result.make_empty
+			if
+				attached a_object as al_object and then
+				attached {JSON_STRING} al_object.item (json_string (a_key)) as al_item
+			then
+				Result := al_item.item
+			end
+		end
+
+	boolean_value (a_object: detachable JSON_OBJECT; a_key: STRING): BOOLEAN
+			--
+		do
+			create Result
+			if
+				attached a_object as al_object and then
+				attached {JSON_BOOLEAN} al_object.item (json_string (a_key)) as al_item
+			then
+				Result := al_item.item
+			end
+		end
+
+	json_string (a_string: STRING): JSON_STRING
+			-- Convert `a_string' to JSON_STRING.
+		do
+			create Result.make_from_string (a_string)
+		end
+
+feature {NONE} -- Implementation
+
+	prep_json_string (a_json: STRING): STRING
+			-- Prepare `a_json' for parsing.
+		do
+			if a_json [a_json.count].is_control then
+				from
+
+				until
+					not a_json [a_json.count].is_control
+				loop
+					a_json.remove_tail (1)
+				end
+			end
+			if a_json [a_json.count] = ')' then
+				a_json [a_json.count] := '}'
+			end
+			Result := a_json
+		end
+
+note
+	design: "[
+		JSON_VALUE
+			JSON_ARRAY
+			JSON_BOOLEAN
+			JSON_NULL
+			JSON_NUMBER
+			JSON_OBJECT
+			JSON_STRING
+		]"
+
 end
