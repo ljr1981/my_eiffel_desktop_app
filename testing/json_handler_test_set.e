@@ -24,7 +24,10 @@ feature -- Test routines
 			l_json: STRING
 			l_file: PLAIN_TEXT_FILE
 		do
+				-- Start with our JSON_HANDLER
 			create l_handler
+
+				-- Create a PERSON to use for Serialization
 			create l_person
 			l_person.set_id (1)
 			l_person.set_first_name ("Laurice")
@@ -33,17 +36,23 @@ feature -- Test routines
 			l_person.set_gender ("Genderfluid")
 			l_person.set_ip_address ("160.143.175.200")
 
+				-- Turn PERSON into JSON
 			l_json := l_handler.to_json_string (l_person, l_handler.serializer_ctx)
 			assert_strings_equal ("person_json", person_json, l_json)
 
+				-- Save this to a file, so we can inspect it.
 			create l_file.make_create_read_write ("person.json")
 			l_file.put_string (l_json)
 			l_file.close
 
+				-- Deserialize JSON back to PERSON
 			create l_person -- empty/blank new PERSON instance
 			check has_person: attached {PERSON} l_handler.from_json_string (l_json, l_handler.deserializer_ctx, l_person.generating_type) as al_person then
 				l_person := al_person
 			end
+
+				-- Now, test that our Deserialization worked
+				--	and we have our PERSON back ...
 			assert_equal ("id", 				1,					l_person.id)
 			assert_strings_equal ("first_name", "Laurice", 			l_person.first_name)
 			assert_strings_equal ("last_name", 	"Gilley", 			l_person.last_name)
