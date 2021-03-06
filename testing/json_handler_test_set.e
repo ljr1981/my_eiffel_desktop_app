@@ -9,7 +9,7 @@ inherit
 
 feature -- Test routines
 
-	json_deserialization_test
+	json_serialization_deserialization_test
 			-- New test routine
 		note
 			testing:  "covers/{JSON_HANDLER}.json_string_to_json_object",
@@ -31,9 +31,26 @@ feature -- Test routines
 				assert_strings_equal ("gender", 	"Genderfluid", 		l_handler.string_value (l_object, "gender"))
 				assert_strings_equal ("ip_address", "160.143.175.200", 	l_handler.string_value (l_object, "ip_address"))
 
+					-- Serialization of JSON_OBJECT --> File
 				create l_file.make_create_read_write ("json_small.json")
 				l_file.put_string (l_object.representation)
 				l_file.close
+			end
+
+				-- Now, read back that file and Deserialize the contents.
+			create l_file.make_open_read ("json_small.json")
+			l_file.read_stream (l_file.count)
+			l_file.close
+
+				-- We ought to have the same data.			
+			l_object := l_handler.string_to_object (l_file.last_string)
+			if attached l_object then
+				assert_equal ("id", 				{INTEGER_64} 1, 	l_handler.number_value (l_object, "id"))
+				assert_strings_equal ("first_name", "Laurice", 			l_handler.string_value (l_object, "first_name"))
+				assert_strings_equal ("last_name", 	"Gilley", 			l_handler.string_value (l_object, "last_name"))
+				assert_strings_equal ("email", 		"lgilley0@ca.gov", 	l_handler.string_value (l_object, "email"))
+				assert_strings_equal ("gender", 	"Genderfluid", 		l_handler.string_value (l_object, "gender"))
+				assert_strings_equal ("ip_address", "160.143.175.200", 	l_handler.string_value (l_object, "ip_address"))
 			end
 		end
 
