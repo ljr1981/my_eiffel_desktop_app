@@ -12,7 +12,7 @@ feature -- Test routines
 	json_serialization_deserialization_test
 			-- New test routine
 		note
-			testing:  "covers/{JSON_HANDLER}.json_string_to_json_object",
+			testing:  "covers/{JSON_HANDLER}.string_to_object",
 						"execution/isolated"
 			EIS: "name=json_small_file", "src=$(system_path)\json_small.json"
 		local
