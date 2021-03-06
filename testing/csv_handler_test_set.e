@@ -67,6 +67,8 @@ feature -- Test routines
 					"covers/{CSV_HANDLER}.out_to_file",
 					"covers/{CSV_HANDLER}.read_from_filename",
 					"execution/isolated"
+			EIS: "name=csv_1.txt", "src=$(system_path)\csv_1.txt"
+			EIS: "name=csv_2.txt", "src=$(system_path)\csv_2.txt"
 		local
 			l_csv: CSV_HANDLER
 		do

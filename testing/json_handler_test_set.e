@@ -9,24 +9,32 @@ inherit
 
 feature -- Test routines
 
-	json_data_test
+	json_deserialization_test
 			-- New test routine
 		note
 			testing:  "covers/{JSON_HANDLER}.json_string_to_json_object",
 						"execution/isolated"
+			EIS: "name=json_small_file", "src=$(system_path)\json_small.json"
 		local
 			l_handler: JSON_HANDLER
 			l_object: detachable JSON_OBJECT
+			l_file: PLAIN_TEXT_FILE
 		do
 			create l_handler
 			l_object := l_handler.string_to_object (json_small)
 
-			assert_equal ("id", 				{INTEGER_64} 1, 	l_handler.number_value (l_object, "id"))
-			assert_strings_equal ("first_name", "Laurice", 			l_handler.string_value (l_object, "first_name"))
-			assert_strings_equal ("last_name", 	"Gilley", 			l_handler.string_value (l_object, "last_name"))
-			assert_strings_equal ("email", 		"lgilley0@ca.gov", 	l_handler.string_value (l_object, "email"))
-			assert_strings_equal ("gender", 	"Genderfluid", 		l_handler.string_value (l_object, "gender"))
-			assert_strings_equal ("ip_address", "160.143.175.200", 	l_handler.string_value (l_object, "ip_address"))
+			if attached l_object then
+				assert_equal ("id", 				{INTEGER_64} 1, 	l_handler.number_value (l_object, "id"))
+				assert_strings_equal ("first_name", "Laurice", 			l_handler.string_value (l_object, "first_name"))
+				assert_strings_equal ("last_name", 	"Gilley", 			l_handler.string_value (l_object, "last_name"))
+				assert_strings_equal ("email", 		"lgilley0@ca.gov", 	l_handler.string_value (l_object, "email"))
+				assert_strings_equal ("gender", 	"Genderfluid", 		l_handler.string_value (l_object, "gender"))
+				assert_strings_equal ("ip_address", "160.143.175.200", 	l_handler.string_value (l_object, "ip_address"))
+
+				create l_file.make_create_read_write ("json_small.json")
+				l_file.put_string (l_object.representation)
+				l_file.close
+			end
 		end
 
 feature {NONE} -- Test Support

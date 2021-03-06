@@ -3,6 +3,7 @@ note
 		Demonstrate how to coordinate the EV_APPLICATION with EV_TITLED_WINDOW 
 		to form a working desktop application.
 		]"
+	EIS: "name=documentation", "src=$(system_path)/documentation/document.txt"
 	EIS: "name=posted_CA022_issue_to_Eiffel_google_groups",
 			"src=https://groups.google.com/g/eiffel-users/c/whDZWeeHKMg"
 	EIS: "name=handled_CA022_issue_in_v20_11_see_compiler_notes",
