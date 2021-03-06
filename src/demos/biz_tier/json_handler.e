@@ -25,14 +25,19 @@ feature -- Query Functions
 				attached a_object as al_object and then
 				attached {JSON_NUMBER} al_object.item (json_string (a_key)) as al_item
 			then
+				--is_double: BOOLEAN
+				--is_integer: BOOLEAN
+				--is_natural: BOOLEAN
+				--is_real: BOOLEAN
+
 				if al_item.is_double then
 					Result := al_item.double_item
 				elseif al_item.is_integer then
-					Result := al_item.integer_type
+					Result := al_item.integer_64_item
 				elseif al_item.is_natural then
 					Result := al_item.natural_64_item
 				elseif al_item.is_real then
-					Result := al_item.real_type
+					Result := al_item.real_64_item.truncated_to_real
 				else
 					Result := 0
 				end
