@@ -1,10 +1,12 @@
 note
 	goal: "Demonstrate an ADDRESS for use in complex object-graphs."
-
+	ca_ignore: "CA011" -- The number of args is okay with me.
+	
 class
 	ADDRESS
 
 create
+	default_create,
 	make_from_data
 
 feature {NONE} -- Initialization
