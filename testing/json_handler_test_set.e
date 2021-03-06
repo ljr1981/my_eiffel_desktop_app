@@ -38,9 +38,11 @@ feature -- Test routines
 
 				-- Turn PERSON into JSON
 			l_json := l_handler.to_json_string (l_person, l_handler.serializer_ctx)
+
+				-- Ensure we got what we expect.
 			assert_strings_equal ("person_json", person_json, l_json)
 
-				-- Save this to a file, so we can inspect it.
+				-- Save this to a file, so we can inspect it (see EIS link above).
 			create l_file.make_create_read_write ("person.json")
 			l_file.put_string (l_json)
 			l_file.close
