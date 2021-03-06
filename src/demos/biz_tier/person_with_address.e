@@ -9,7 +9,7 @@ inherit
 
 feature -- Access
 
-	address: detachable ADDRESS;
+	address: detachable ADDRESS assign set_address
 			-- The `address' of Current (if any).
 
 feature -- Settings
