@@ -55,6 +55,7 @@ feature {NONE} -- Initialization: Menu
 			create Result.make_with_text ("&Demos")
 			Result.extend (demo_gui_containership)
 			Result.extend (demo_primitives)
+			Result.extend (demo_grids)
 		end
 
 feature -- Menu Elements
@@ -85,6 +86,12 @@ feature -- Menu Elements: Demos
 			create Result.make_with_text_and_action ("&Primitives demo", agent on_demo_primitives_click)
 		end
 
+	demo_grids: EV_MENU_ITEM
+			-- Primitive Grids
+		do
+			create Result.make_with_text_and_action ("&Grids demo", agent on_demo_grids_click)
+		end
+
 feature -- Event Operations
 
 	on_file_new_click
@@ -109,6 +116,12 @@ feature -- Event Operations
 			--
 		do
 			(create {EV_PRIMITIVE_DEMO_WINDOW}.make_with_parent (Current)).do_nothing
+		end
+
+	on_demo_grids_click
+			--
+		do
+			(create {EV_GRID_DEMO_WINDOW}.make_with_parent (Current)).do_nothing
 		end
 
 note
