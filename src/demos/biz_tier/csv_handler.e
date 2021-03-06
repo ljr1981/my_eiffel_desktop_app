@@ -1,5 +1,12 @@
 note
 	goal: "Demonstrate reading, parsing, writing CSV data."
+	ca_ignore: "CA022" 	-- Class 'APPLICATION' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
+	ca_ignore: "CA029" 	-- The non-Void test for the variable ''
+						--	will always succeed, therefore
+						--  the test can be removed.
+						--  REALITY: Working as designed (better design?)
 
 class
 	CSV_HANDLER
@@ -67,12 +74,12 @@ feature -- Basic Operations
 			l_rows_cols: attached like rows_cols_tuple_anchor
 		do
 			last_data := Void -- Be sure to wipe out prior read-results.
-			if attached a_data as al_raw then
+			if attached a_data then
 					-- Get row/col count
-				l_rows_cols := row_max_col_counts (al_raw)
+				l_rows_cols := row_max_col_counts (a_data)
 					-- Load l_data ...
 				create l_data.make_filled (Empty_string, l_rows_cols.rows, l_rows_cols.max_cols)
-				across al_raw as ic loop
+				across a_data as ic loop
 					across ic.item.split (comma_char) as ic_items loop
 						l_data.put (ic_items.item, ic.cursor_index, ic_items.cursor_index)
 					end
@@ -139,10 +146,10 @@ feature {NONE} -- Implementation
 			l_rows,
 			l_max_cols: INTEGER
 		do
-			if attached a_data as al_raw then
+			if attached a_data then
 					-- Get row/col count
-				l_rows := al_raw.count
-				across al_raw as ic loop
+				l_rows := a_data.count
+				across a_data as ic loop
 					if attached ic.item.split (comma_char).count as al_cols and then al_cols > l_max_cols then
 						l_max_cols := al_cols
 					end

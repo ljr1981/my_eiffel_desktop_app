@@ -11,6 +11,18 @@ note
 	ca_ignore: "CA022" 	-- Class 'EV_PRIMITIVE_DEMO_WINDOW' contains unreachable code
 						--	that should be considered to be removed.
 						--	REALITY: The structure of the code is okay.
+	ca_ignore: "CA093" 	-- Manifest array of type ARRAY [attached PROCEDURE] is used in
+						--	a reattachment with target type ARRAY [detachable PROCEDURE]:
+						-- 	- add an explicit manifest array type;
+						-- 	- change target type to make sure the types are the same;
+						-- 	- disable the rule "Manifest array type mismatch" in the
+						--		code analizer preferences or add the rule CA093 to the
+						--		list of ignored rules of the class.				
+	ca_ignore: "CA011" 	-- Feature 'on_label_click_2' has many arguments.
+						--	The number of arguments of 8 is greater than or equal to
+						--	the defined threshold of 4.
+						--  REALITY: Tell this to Eiffel Vision routines that have such
+						--				argument counts from years ago!		
 
 class
 	EV_PRIMITIVE_DEMO_WINDOW

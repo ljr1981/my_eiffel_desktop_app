@@ -1,5 +1,8 @@
 note
 	testing: "type/manual"
+	ca_ignore: "CA022" 	-- Class 'APPLICATION' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	CSV_HANDLER_TEST_SET

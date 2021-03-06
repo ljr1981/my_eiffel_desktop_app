@@ -94,8 +94,8 @@ feature {NONE} -- Initialization: Helpers
 		require
 			has_child: a_child.has_parent and then attached a_child.parent as al_parent and then al_parent ~ a_parent
 		do
-			if attached a_parent as al_parent then
-				al_parent.disable_item_expand (a_child)
+			if attached a_parent then
+				a_parent.disable_item_expand (a_child)
 			end
 		end
 

@@ -1,5 +1,8 @@
 note
 	goal: "Demonstration of reading/writing JSON using JSON lib facilities."
+	ca_ignore: "CA022" 	-- Class 'APPLICATION' contains unreachable code
+						--	that should be considered to be removed.
+						--	REALITY: The structure of the code is okay.
 
 class
 	JSON_HANDLER
@@ -21,9 +24,10 @@ feature -- Query Functions
 	number_value (a_object: detachable JSON_OBJECT; a_key: STRING): NUMERIC
 			-- `number_value' for `a_key' in `a_object'
 		do
+			Result := 0
 			if
-				attached a_object as al_object and then
-				attached {JSON_NUMBER} al_object.item (json_string (a_key)) as al_item
+				attached a_object and then
+				attached {JSON_NUMBER} a_object.item (json_string (a_key)) as al_item
 			then
 				--is_double: BOOLEAN
 				--is_integer: BOOLEAN
@@ -38,11 +42,7 @@ feature -- Query Functions
 					Result := al_item.natural_64_item
 				elseif al_item.is_real then
 					Result := al_item.real_64_item.truncated_to_real
-				else
-					Result := 0
 				end
-			else
-				Result := 0
 			end
 		end
 
@@ -51,8 +51,8 @@ feature -- Query Functions
 		do
 			create Result.make_empty
 			if
-				attached a_object as al_object and then
-				attached {JSON_STRING} al_object.item (json_string (a_key)) as al_item
+				attached a_object and then
+				attached {JSON_STRING} a_object.item (json_string (a_key)) as al_item
 			then
 				Result := al_item.item
 			end
@@ -63,8 +63,8 @@ feature -- Query Functions
 		do
 			create Result
 			if
-				attached a_object as al_object and then
-				attached {JSON_BOOLEAN} al_object.item (json_string (a_key)) as al_item
+				attached a_object and then
+				attached {JSON_BOOLEAN} a_object.item (json_string (a_key)) as al_item
 			then
 				Result := al_item.item
 			end

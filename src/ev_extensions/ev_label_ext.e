@@ -1,4 +1,12 @@
-﻿class
+﻿note
+	goal: "Demonstrate extending EV_LABEL class from Eiffel Vision2."
+	ca_ignore: "CA011" 	-- Feature 'on_click_handler' has many arguments.
+						--	The number of arguments of 9 is greater than or equal to
+						--	the defined threshold of 4.
+						--  REALITY: Tell this to Eiffel Vision routines that have such
+						--				argument counts from years ago!		
+
+class
 	EV_LABEL_EXT
 
 inherit
