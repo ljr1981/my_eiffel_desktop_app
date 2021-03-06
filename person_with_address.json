@@ -1,0 +1,1 @@
+{"$TYPE":"PERSON_WITH_ADDRESS","first_name":"Laurice","last_name":"Gilley","email":"lgilley0@ca.gov","gender":"Genderfluid","ip_address":"160.143.175.200","address":{"$TYPE":"ADDRESS","street_line":"123 MY STREET","aux_line":"APT 202","city":"SOME_CITY","state":"CA","zip_plus_4":"90122-1234"},"id":1}
