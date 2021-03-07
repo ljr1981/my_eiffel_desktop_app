@@ -12,6 +12,23 @@ inherit
 
 feature -- Test routines
 
+	the_value_of_print_test
+			-- Do we need "print"?
+		local
+			fn,mn,ln,suffix: STRING
+		do
+			fn := "Larry"
+			mn := "J"
+			ln := "Rix"
+			suffix := "Jr."
+
+			print (fn); print (mn); print (ln); print (suffix)
+
+			assert_strings_equal ("sample_test_tag", "Larry J. Rix, Jr.", fn + mn + ln + suffix)
+		end
+
+feature -- Test routines
+
 	read_from_data_test
 			-- Test the CSV_HANDLER.read_from_data routine.
 		note
@@ -83,7 +100,7 @@ feature -- Test routines
 			assert_strings_equal ("outs_match_2", csv_2, l_csv.out)				-- Should match out
 			l_csv.out_to_file (create {PATH}.make_from_string ("csv_2.txt"))	-- Save to file
 			l_csv.read_from_filename ("csv_2.txt")								-- Read file
-			assert_strings_equal ("outs_match_2b", csv_2, l_csv.out)				-- Should match out
+			assert_strings_equal ("outs_match_2b", csv_2, l_csv.out)			-- Should match out
 		end
 
 feature {NONE} -- Test Support
