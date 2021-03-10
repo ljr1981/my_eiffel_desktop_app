@@ -7,38 +7,12 @@ note
 class
 	JSON_HANDLER
 
---inherit
---	JSON_REFLECTOR_SERIALIZER
---		redefine
---			reset
---		end
-
---	JSON_REFLECTOR_DESERIALIZER
---		redefine
---			reset
---		end
-
 feature -- Contexts
 
---	serializer_ctx: JSON_SERIALIZER_CONTEXT
---			-- A general serializer context for Current.
---		once
---			create Result
---		end
-
---	deserializer_ctx: JSON_DESERIALIZER_CONTEXT
---			-- A general deserializer context for Current.
---		once
---			create Result
---		end
-
-	json_converter: JSON_SERIALIZATION
-			-- Serialization/Deserialization processor.
-		local
-			l_factory: JSON_SERIALIZATION_FACTORY
+	converter: JSON_SERIALIZATION
+			-- Serialization/Deserialization converter.
 		once
-			create l_factory
-			Result := l_factory.smart_serialization
+			Result := (create {JSON_SERIALIZATION_FACTORY}).smart_serialization
 			Result.set_pretty_printing
 			Result.context.deserializer_context.set_value_creation_callback (create {JSON_DESERIALIZER_CREATION_AGENT_CALLBACK}.make (
 						agent (a_info: JSON_DESERIALIZER_CREATION_INFORMATION)
@@ -58,14 +32,6 @@ feature -- Contexts
 					)
 				)
 		end
-
---feature -- Cleaning
-
---	reset
---			-- <Precursor>
---		do
---			fields_infos_by_type_id := Void
---		end
 
 note
 	design: "[

@@ -9,15 +9,15 @@ inherit
 
 feature -- Test routines
 
-	login_with_test
-			-- github
-		note
-			testing:  "execution/isolated"
-		local
-			l_github: OAUTH_20_GITHUB_API
-		do
-			create l_github
-		end
+--	login_with_test
+--			-- github
+--		note
+--			testing:  "execution/isolated"
+--		local
+--			l_github: OAUTH_20_GITHUB_API
+--		do
+--			create l_github
+--		end
 
 end
 

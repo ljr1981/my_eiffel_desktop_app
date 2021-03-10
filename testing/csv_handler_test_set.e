@@ -27,8 +27,6 @@ feature -- Test routines
 			assert_strings_equal ("sample_test_tag", "Larry J. Rix, Jr.", fn + " " + mn + " " + ln + ", " + suffix)
 		end
 
-feature -- Test routines
-
 	read_from_data_test
 			-- Test the CSV_HANDLER.read_from_data routine.
 		note

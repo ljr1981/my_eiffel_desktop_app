@@ -31,7 +31,7 @@ feature -- Test routines
 		do
 				-- Start with our JSON_HANDLER
 			create l_handler
-			l_handler.json_converter.set_compact_printing
+			l_handler.converter.set_compact_printing
 
 				-- Create a PERSON to use for Serialization
 			create l_person
@@ -43,7 +43,7 @@ feature -- Test routines
 			l_person.set_ip_address ("160.143.175.200")
 
 				-- Turn PERSON into JSON
-			l_json := l_handler.json_converter.to_json_string (l_person)
+			l_json := l_handler.converter.to_json_string (l_person)
 
 				-- Ensure we got what we expect.
 			assert_strings_equal ("person_json", person_json, l_json)
@@ -55,7 +55,7 @@ feature -- Test routines
 
 				-- Deserialize JSON back to PERSON
 			create l_person -- empty/blank new PERSON instance
-			check has_person: attached {PERSON} l_handler.json_converter.from_json_string (l_json, {PERSON}) as al_person then
+			check has_person: attached {PERSON} l_handler.converter.from_json_string (l_json, {PERSON}) as al_person then
 				l_person := al_person
 			end
 
@@ -88,7 +88,7 @@ feature -- Test routines
 		do
 				-- Start with our JSON_HANDLER
 			create l_handler
-			l_handler.json_converter.set_compact_printing
+			l_handler.converter.set_compact_printing
 
 				-- Create a PERSON_WITH_ADDRESS to use for Serialization
 			create l_person
@@ -101,7 +101,7 @@ feature -- Test routines
 			l_person.set_address (create {ADDRESS}.make_from_data ("123 MY STREET", "APT 202", "SOME_CITY", "CA", "90122-1234"))
 
 				-- Turn PERSON into JSON
-			l_json := l_handler.json_converter.to_json_string (l_person)
+			l_json := l_handler.converter.to_json_string (l_person)
 
 				-- Ensure we got what we expect.
 			assert_strings_equal ("person_with_address_json", person_with_address_json, l_json)
@@ -113,7 +113,7 @@ feature -- Test routines
 
 				-- Deserialize JSON back to PERSON_WITH_ADDRESS
 			create l_person -- empty/blank new PERSON_WITH_ADDRESS instance
-			check has_person: attached {PERSON_WITH_ADDRESS} l_handler.json_converter.from_json_string (l_json, {PERSON_WITH_ADDRESS}) as al_person then
+			check has_person: attached {PERSON_WITH_ADDRESS} l_handler.converter.from_json_string (l_json, {PERSON_WITH_ADDRESS}) as al_person then
 				l_person := al_person
 			end
 
