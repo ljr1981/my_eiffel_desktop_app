@@ -16,11 +16,27 @@ feature -- Test routines
 			-- Test the serialization and deserialization of {PERSON}.
 		note
 			testing:
+				"covers/{JSON_HANDLER}.Converter",
 				"covers/{JSON_HANDLER}.default_create",
-				"covers/{JSON_HANDLER}.Deserializer_ctx",
-				"covers/{JSON_HANDLER}.from_json_string",
-				"covers/{JSON_HANDLER}.Serializer_ctx",
-				"covers/{JSON_HANDLER}.to_json_string",
+				"covers/{JSON_SERIALIZATION}.from_json_string",
+				"covers/{JSON_SERIALIZATION}.set_compact_printing",
+				"covers/{JSON_SERIALIZATION}.to_json_string",
+				"covers/{PERSON}.default_create",
+				"covers/{PERSON}.email",
+				"covers/{PERSON}.first_name",
+				"covers/{PERSON}.gender",
+				"covers/{PERSON}.id",
+				"covers/{PERSON}.ip_address",
+				"covers/{PERSON}.last_name",
+				"covers/{PERSON}.set_email",
+				"covers/{PERSON}.set_first_name",
+				"covers/{PERSON}.set_gender",
+				"covers/{PERSON}.set_id",
+				"covers/{PERSON}.set_ip_address",
+				"covers/{PERSON}.set_last_name",
+				"covers/{PLAIN_TEXT_FILE}.close",
+				"covers/{PLAIN_TEXT_FILE}.make_create_read_write",
+				"covers/{PLAIN_TEXT_FILE}.put_string",
 				"execution/isolated"
 			EIS: "name=json_small_file", "src=$(system_path)\person.json"
 		local
@@ -73,11 +89,34 @@ feature -- Test routines
 				-- Test if doing complex object graphs is just as simple.
 		note
 			testing:
+				"covers/{ADDRESS}.city",
+				"covers/{ADDRESS}.make_from_data",
+				"covers/{ADDRESS}.state",
+				"covers/{ADDRESS}.street_line",
+				"covers/{ADDRESS}.zip_plus_4",
+				"covers/{JSON_HANDLER}.Converter",
 				"covers/{JSON_HANDLER}.default_create",
-				"covers/{JSON_HANDLER}.Deserializer_ctx",
-				"covers/{JSON_HANDLER}.from_json_string",
-				"covers/{JSON_HANDLER}.Serializer_ctx",
-				"covers/{JSON_HANDLER}.to_json_string",
+				"covers/{JSON_SERIALIZATION}.from_json_string",
+				"covers/{JSON_SERIALIZATION}.set_compact_printing",
+				"covers/{JSON_SERIALIZATION}.to_json_string",
+				"covers/{PERSON_WITH_ADDRESS}.address",
+				"covers/{PERSON_WITH_ADDRESS}.default_create",
+				"covers/{PERSON_WITH_ADDRESS}.email",
+				"covers/{PERSON_WITH_ADDRESS}.first_name",
+				"covers/{PERSON_WITH_ADDRESS}.gender",
+				"covers/{PERSON_WITH_ADDRESS}.id",
+				"covers/{PERSON_WITH_ADDRESS}.ip_address",
+				"covers/{PERSON_WITH_ADDRESS}.last_name",
+				"covers/{PERSON_WITH_ADDRESS}.set_address",
+				"covers/{PERSON_WITH_ADDRESS}.set_email",
+				"covers/{PERSON_WITH_ADDRESS}.set_first_name",
+				"covers/{PERSON_WITH_ADDRESS}.set_gender",
+				"covers/{PERSON_WITH_ADDRESS}.set_id",
+				"covers/{PERSON_WITH_ADDRESS}.set_ip_address",
+				"covers/{PERSON_WITH_ADDRESS}.set_last_name",
+				"covers/{PLAIN_TEXT_FILE}.close",
+				"covers/{PLAIN_TEXT_FILE}.make_create_read_write",
+				"covers/{PLAIN_TEXT_FILE}.put_string",
 				"execution/isolated"
 			EIS: "name=json_small_file", "src=$(system_path)\person_with_address.json"
 		local
