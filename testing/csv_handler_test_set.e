@@ -71,7 +71,11 @@ feature -- Test routines
 			EIS: "name=csv_2.txt", "src=$(system_path)\csv_2.txt"
 		local
 			l_csv: CSV_HANDLER
+			myInt: INTEGER
 		do
+			print("Running outputs_test")
+			myInt := 5
+			myInt := myInt + 2
 			create l_csv
 			l_csv.read_from_data (csv_1.split ({CSV_HANDLER}.new_line))			-- From data 1
 			assert_strings_equal ("outs_match_1", csv_1, l_csv.out)				-- Should match out
