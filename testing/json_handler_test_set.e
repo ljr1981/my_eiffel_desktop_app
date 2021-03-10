@@ -31,6 +31,7 @@ feature -- Test routines
 		do
 				-- Start with our JSON_HANDLER
 			create l_handler
+			l_handler.json_converter.set_compact_printing
 
 				-- Create a PERSON to use for Serialization
 			create l_person
@@ -42,7 +43,7 @@ feature -- Test routines
 			l_person.set_ip_address ("160.143.175.200")
 
 				-- Turn PERSON into JSON
-			l_json := l_handler.to_json_string (l_person, l_handler.serializer_ctx)
+			l_json := l_handler.json_converter.to_json_string (l_person)
 
 				-- Ensure we got what we expect.
 			assert_strings_equal ("person_json", person_json, l_json)
@@ -54,7 +55,7 @@ feature -- Test routines
 
 				-- Deserialize JSON back to PERSON
 			create l_person -- empty/blank new PERSON instance
-			check has_person: attached {PERSON} l_handler.from_json_string (l_json, l_handler.deserializer_ctx, l_person.generating_type) as al_person then
+			check has_person: attached {PERSON} l_handler.json_converter.from_json_string (l_json, {PERSON}) as al_person then
 				l_person := al_person
 			end
 

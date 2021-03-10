@@ -7,30 +7,30 @@ note
 class
 	JSON_HANDLER
 
-inherit
-	JSON_REFLECTOR_SERIALIZER
-		redefine
-			reset
-		end
+--inherit
+--	JSON_REFLECTOR_SERIALIZER
+--		redefine
+--			reset
+--		end
 
-	JSON_REFLECTOR_DESERIALIZER
-		redefine
-			reset
-		end
+--	JSON_REFLECTOR_DESERIALIZER
+--		redefine
+--			reset
+--		end
 
 feature -- Contexts
 
-	serializer_ctx: JSON_SERIALIZER_CONTEXT
-			-- A general serializer context for Current.
-		once
-			create Result
-		end
+--	serializer_ctx: JSON_SERIALIZER_CONTEXT
+--			-- A general serializer context for Current.
+--		once
+--			create Result
+--		end
 
-	deserializer_ctx: JSON_DESERIALIZER_CONTEXT
-			-- A general deserializer context for Current.
-		once
-			create Result
-		end
+--	deserializer_ctx: JSON_DESERIALIZER_CONTEXT
+--			-- A general deserializer context for Current.
+--		once
+--			create Result
+--		end
 
 	json_converter: JSON_SERIALIZATION
 			-- Serialization/Deserialization processor.
@@ -59,13 +59,13 @@ feature -- Contexts
 				)
 		end
 
-feature -- Cleaning
+--feature -- Cleaning
 
-	reset
-			-- <Precursor>
-		do
-			fields_infos_by_type_id := Void
-		end
+--	reset
+--			-- <Precursor>
+--		do
+--			fields_infos_by_type_id := Void
+--		end
 
 note
 	design: "[
