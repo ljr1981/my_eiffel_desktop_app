@@ -18,13 +18,13 @@ feature -- Test routines
 			fn,mn,ln,suffix: STRING
 		do
 			fn := "Larry"
-			mn := "J"
+			mn := "J."
 			ln := "Rix"
 			suffix := "Jr."
 
 			print (fn); print (mn); print (ln); print (suffix)
 
-			assert_strings_equal ("sample_test_tag", "Larry J. Rix, Jr.", fn + mn + ln + suffix)
+			assert_strings_equal ("sample_test_tag", "Larry J. Rix, Jr.", fn + " " + mn + " " + ln + ", " + suffix)
 		end
 
 feature -- Test routines

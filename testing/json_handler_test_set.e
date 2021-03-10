@@ -87,6 +87,7 @@ feature -- Test routines
 		do
 				-- Start with our JSON_HANDLER
 			create l_handler
+			l_handler.json_converter.set_compact_printing
 
 				-- Create a PERSON_WITH_ADDRESS to use for Serialization
 			create l_person
@@ -99,7 +100,7 @@ feature -- Test routines
 			l_person.set_address (create {ADDRESS}.make_from_data ("123 MY STREET", "APT 202", "SOME_CITY", "CA", "90122-1234"))
 
 				-- Turn PERSON into JSON
-			l_json := l_handler.to_json_string (l_person, l_handler.serializer_ctx)
+			l_json := l_handler.json_converter.to_json_string (l_person)
 
 				-- Ensure we got what we expect.
 			assert_strings_equal ("person_with_address_json", person_with_address_json, l_json)
@@ -111,7 +112,7 @@ feature -- Test routines
 
 				-- Deserialize JSON back to PERSON_WITH_ADDRESS
 			create l_person -- empty/blank new PERSON_WITH_ADDRESS instance
-			check has_person: attached {PERSON_WITH_ADDRESS} l_handler.from_json_string (l_json, l_handler.deserializer_ctx, l_person.generating_type) as al_person then
+			check has_person: attached {PERSON_WITH_ADDRESS} l_handler.json_converter.from_json_string (l_json, {PERSON_WITH_ADDRESS}) as al_person then
 				l_person := al_person
 			end
 
@@ -127,7 +128,7 @@ feature -- Test routines
 			check has_address: attached {ADDRESS} l_person.address as al_address then
 				assert_strings_equal ("street_line", 	"123 MY STREET", 	al_address.street_line)
 				assert_strings_equal ("aux_line", 		"APT 202", 			al_address.aux_line)
-				assert_strings_equal ("city", 			"SOME_CITYv", 		al_address.city)
+				assert_strings_equal ("city", 			"SOME_CITY", 		al_address.city)
 				assert_strings_equal ("state", 			"CA", 				al_address.state)
 				assert_strings_equal ("zip_plus_4", 	"90122-1234", 		al_address.zip_plus_4)
 			end
