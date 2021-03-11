@@ -17,9 +17,9 @@ feature -- Test routines
 		local
 			fn,mn,ln,suffix: STRING
 		do
-			fn := "Larry"
-			mn := "J"
-			ln := "Rix"
+			fn := "Larry "
+			mn := "J. "
+			ln := "Rix, "
 			suffix := "Jr."
 
 			print (fn); print (mn); print (ln); print (suffix)
