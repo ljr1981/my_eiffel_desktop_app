@@ -14,28 +14,38 @@ feature -- Test routines
 
 	the_value_of_print_test
 			-- Do we need "print"?
+		note
+			testing: "covers/{STRING_8}.plus"
 		local
 			fn,mn,ln,suffix: STRING
 		do
+<<<<<<< HEAD
 			fn := "Larry "
 			mn := "J. "
 			ln := "Rix, "
+=======
+			fn := "Larry"
+			mn := "J."
+			ln := "Rix"
+>>>>>>> 315bf0c1c0e442942860d52e4b4503cc7c2238e6
 			suffix := "Jr."
 
 			print (fn); print (mn); print (ln); print (suffix)
 
-			assert_strings_equal ("sample_test_tag", "Larry J. Rix, Jr.", fn + mn + ln + suffix)
+			assert_strings_equal ("sample_test_tag", "Larry J. Rix, Jr.", fn + " " + mn + " " + ln + ", " + suffix)
 		end
-
-feature -- Test routines
 
 	read_from_data_test
 			-- Test the CSV_HANDLER.read_from_data routine.
 		note
-			testing:  "covers/{CSV_HANDLER}.read_from_data",
-					"covers/{CSV_HANDLER}.last_read_data",
-					"covers/{CSV_HANDLER}.last_row_col_counts",
-					"execution/isolated"
+			testing:  "covers/{ARRAY2}.item",
+						"covers/{CHARACTER_8}.to_character_32",
+						"covers/{CSV_HANDLER}.default_create",
+						"covers/{CSV_HANDLER}.last_data",
+						"covers/{CSV_HANDLER}.last_row_col_counts",
+						"covers/{CSV_HANDLER}.New_line",
+						"covers/{CSV_HANDLER}.read_from_data",
+						"covers/{STRING_8}.split"
 			design: "[
 				This test exercises the heart of the CSV handler. The synopsis is:
 				
@@ -80,10 +90,15 @@ feature -- Test routines
 	outputs_test
 			-- Test outputs
 		note
-			testing:  "covers/{CSV_HANDLER}.out",
-					"covers/{CSV_HANDLER}.out_to_file",
-					"covers/{CSV_HANDLER}.read_from_filename",
-					"execution/isolated"
+			testing:  "covers/{CHARACTER_8}.to_character_32",
+						"covers/{CSV_HANDLER}.default_create",
+						"covers/{CSV_HANDLER}.New_line",
+						"covers/{CSV_HANDLER}.out",
+						"covers/{CSV_HANDLER}.out_to_file",
+						"covers/{CSV_HANDLER}.read_from_data",
+						"covers/{CSV_HANDLER}.read_from_filename",
+						"covers/{PATH}.make_from_string",
+						"covers/{STRING_8}.split"
 			EIS: "name=csv_1.txt", "src=$(system_path)\csv_1.txt"
 			EIS: "name=csv_2.txt", "src=$(system_path)\csv_2.txt"
 		local

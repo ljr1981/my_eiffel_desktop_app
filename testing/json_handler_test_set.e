@@ -16,11 +16,27 @@ feature -- Test routines
 			-- Test the serialization and deserialization of {PERSON}.
 		note
 			testing:
+				"covers/{JSON_HANDLER}.Converter",
 				"covers/{JSON_HANDLER}.default_create",
-				"covers/{JSON_HANDLER}.Deserializer_ctx",
-				"covers/{JSON_HANDLER}.from_json_string",
-				"covers/{JSON_HANDLER}.Serializer_ctx",
-				"covers/{JSON_HANDLER}.to_json_string",
+				"covers/{JSON_SERIALIZATION}.from_json_string",
+				"covers/{JSON_SERIALIZATION}.set_compact_printing",
+				"covers/{JSON_SERIALIZATION}.to_json_string",
+				"covers/{PERSON}.default_create",
+				"covers/{PERSON}.email",
+				"covers/{PERSON}.first_name",
+				"covers/{PERSON}.gender",
+				"covers/{PERSON}.id",
+				"covers/{PERSON}.ip_address",
+				"covers/{PERSON}.last_name",
+				"covers/{PERSON}.set_email",
+				"covers/{PERSON}.set_first_name",
+				"covers/{PERSON}.set_gender",
+				"covers/{PERSON}.set_id",
+				"covers/{PERSON}.set_ip_address",
+				"covers/{PERSON}.set_last_name",
+				"covers/{PLAIN_TEXT_FILE}.close",
+				"covers/{PLAIN_TEXT_FILE}.make_create_read_write",
+				"covers/{PLAIN_TEXT_FILE}.put_string",
 				"execution/isolated"
 			EIS: "name=json_small_file", "src=$(system_path)\person.json"
 		local
@@ -31,6 +47,7 @@ feature -- Test routines
 		do
 				-- Start with our JSON_HANDLER
 			create l_handler
+			l_handler.converter.set_compact_printing
 
 				-- Create a PERSON to use for Serialization
 			create l_person
@@ -42,7 +59,7 @@ feature -- Test routines
 			l_person.set_ip_address ("160.143.175.200")
 
 				-- Turn PERSON into JSON
-			l_json := l_handler.to_json_string (l_person, l_handler.serializer_ctx)
+			l_json := l_handler.converter.to_json_string (l_person)
 
 				-- Ensure we got what we expect.
 			assert_strings_equal ("person_json", person_json, l_json)
@@ -54,7 +71,7 @@ feature -- Test routines
 
 				-- Deserialize JSON back to PERSON
 			create l_person -- empty/blank new PERSON instance
-			check has_person: attached {PERSON} l_handler.from_json_string (l_json, l_handler.deserializer_ctx, l_person.generating_type) as al_person then
+			check has_person: attached {PERSON} l_handler.converter.from_json_string (l_json, {PERSON}) as al_person then
 				l_person := al_person
 			end
 
@@ -72,11 +89,34 @@ feature -- Test routines
 				-- Test if doing complex object graphs is just as simple.
 		note
 			testing:
+				"covers/{ADDRESS}.city",
+				"covers/{ADDRESS}.make_from_data",
+				"covers/{ADDRESS}.state",
+				"covers/{ADDRESS}.street_line",
+				"covers/{ADDRESS}.zip_plus_4",
+				"covers/{JSON_HANDLER}.Converter",
 				"covers/{JSON_HANDLER}.default_create",
-				"covers/{JSON_HANDLER}.Deserializer_ctx",
-				"covers/{JSON_HANDLER}.from_json_string",
-				"covers/{JSON_HANDLER}.Serializer_ctx",
-				"covers/{JSON_HANDLER}.to_json_string",
+				"covers/{JSON_SERIALIZATION}.from_json_string",
+				"covers/{JSON_SERIALIZATION}.set_compact_printing",
+				"covers/{JSON_SERIALIZATION}.to_json_string",
+				"covers/{PERSON_WITH_ADDRESS}.address",
+				"covers/{PERSON_WITH_ADDRESS}.default_create",
+				"covers/{PERSON_WITH_ADDRESS}.email",
+				"covers/{PERSON_WITH_ADDRESS}.first_name",
+				"covers/{PERSON_WITH_ADDRESS}.gender",
+				"covers/{PERSON_WITH_ADDRESS}.id",
+				"covers/{PERSON_WITH_ADDRESS}.ip_address",
+				"covers/{PERSON_WITH_ADDRESS}.last_name",
+				"covers/{PERSON_WITH_ADDRESS}.set_address",
+				"covers/{PERSON_WITH_ADDRESS}.set_email",
+				"covers/{PERSON_WITH_ADDRESS}.set_first_name",
+				"covers/{PERSON_WITH_ADDRESS}.set_gender",
+				"covers/{PERSON_WITH_ADDRESS}.set_id",
+				"covers/{PERSON_WITH_ADDRESS}.set_ip_address",
+				"covers/{PERSON_WITH_ADDRESS}.set_last_name",
+				"covers/{PLAIN_TEXT_FILE}.close",
+				"covers/{PLAIN_TEXT_FILE}.make_create_read_write",
+				"covers/{PLAIN_TEXT_FILE}.put_string",
 				"execution/isolated"
 			EIS: "name=json_small_file", "src=$(system_path)\person_with_address.json"
 		local
@@ -87,6 +127,7 @@ feature -- Test routines
 		do
 				-- Start with our JSON_HANDLER
 			create l_handler
+			l_handler.converter.set_compact_printing
 
 				-- Create a PERSON_WITH_ADDRESS to use for Serialization
 			create l_person
@@ -99,7 +140,7 @@ feature -- Test routines
 			l_person.set_address (create {ADDRESS}.make_from_data ("123 MY STREET", "APT 202", "SOME_CITY", "CA", "90122-1234"))
 
 				-- Turn PERSON into JSON
-			l_json := l_handler.to_json_string (l_person, l_handler.serializer_ctx)
+			l_json := l_handler.converter.to_json_string (l_person)
 
 				-- Ensure we got what we expect.
 			assert_strings_equal ("person_with_address_json", person_with_address_json, l_json)
@@ -111,7 +152,7 @@ feature -- Test routines
 
 				-- Deserialize JSON back to PERSON_WITH_ADDRESS
 			create l_person -- empty/blank new PERSON_WITH_ADDRESS instance
-			check has_person: attached {PERSON_WITH_ADDRESS} l_handler.from_json_string (l_json, l_handler.deserializer_ctx, l_person.generating_type) as al_person then
+			check has_person: attached {PERSON_WITH_ADDRESS} l_handler.converter.from_json_string (l_json, {PERSON_WITH_ADDRESS}) as al_person then
 				l_person := al_person
 			end
 
@@ -127,7 +168,7 @@ feature -- Test routines
 			check has_address: attached {ADDRESS} l_person.address as al_address then
 				assert_strings_equal ("street_line", 	"123 MY STREET", 	al_address.street_line)
 				assert_strings_equal ("aux_line", 		"APT 202", 			al_address.aux_line)
-				assert_strings_equal ("city", 			"SOME_CITYv", 		al_address.city)
+				assert_strings_equal ("city", 			"SOME_CITY", 		al_address.city)
 				assert_strings_equal ("state", 			"CA", 				al_address.state)
 				assert_strings_equal ("zip_plus_4", 	"90122-1234", 		al_address.zip_plus_4)
 			end
