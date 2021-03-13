@@ -12,6 +12,20 @@ inherit
 
 feature -- Test routines
 
+	sample_csv_1_test
+			-- Load the "sample1.csv" file.
+		local
+			l_file: PLAIN_TEXT_FILE
+			l_list: LIST [STRING]
+		do
+			create l_file.make_open_read ("sample1.csv")
+			l_file.read_stream (l_file.count)
+			l_file.close
+
+			l_list := l_file.last_string.split ('%N')
+			assert_integers_equal ("11_lines", 11, l_list.count)
+		end
+
 	the_value_of_print_test
 			-- Do we need "print"?
 		note
